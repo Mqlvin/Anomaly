@@ -1,0 +1,14 @@
+31/08/2021 - 20:09 - Anomaly runtime log.
+[20:09:47] [/INFO] The previous log was successfully zipped.
+[20:09:47] [/WARN] .\runtime directory was unsuccessfully created. Maybe it already exists?
+[20:09:47] [/WARN] .\runtime\user-settings directory was unsuccessfully created. Maybe it already exists?
+[20:09:47] [/WARN] .\runtime\settings directory was unsuccessfully created. Maybe it already exists?
+[20:09:47] [/WARN] .\runtime\logs directory was unsuccessfully created. Maybe it already exists?
+[20:09:47] [/WARN] .\backup directory was unsuccessfully created. Maybe it already exists?
+[20:09:47] [/WARN] .\settings directory was unsuccessfully created. Maybe it already exists?
+[20:09:47] [/WARN] .\data directory was unsuccessfully created. Maybe it already exists?
+[20:09:47] [/WARN] .\data\cache directory was unsuccessfully created. Maybe it already exists?
+[20:09:47] [/WARN] .\data\settings directory was unsuccessfully created. Maybe it already exists?
+[20:09:47] [/WARN] .\data\playerdata directory was unsuccessfully created. Maybe it already exists?
+[20:09:47] [/WARN] .\data\response directory was unsuccessfully created. Maybe it already exists?
+[20:09:48] [/INFO] Backup successfully created!

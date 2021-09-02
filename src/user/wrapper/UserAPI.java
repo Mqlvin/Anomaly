@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import io.Reader;
+import io.Writers;
 import user.Users;
 
 import java.io.File;
@@ -16,7 +17,7 @@ public class UserAPI implements Wrapper {
     public String getUserID(String UUID) {
         JsonObject obj = new JsonParser().parse(Reader.readJson(new File("./settings/user-settings/ids.json"))).getAsJsonObject();
         if(obj.has(UUID)) {
-            return obj.get(UUID).toString().replace("\"", "");
+            return Users.toId(obj.get(UUID).toString().replace("\"", ""));
         }
         return null;
     }
@@ -29,5 +30,14 @@ public class UserAPI implements Wrapper {
             return new ArrayList<String>(new Gson().fromJson(obj.get(Users.toId(ID)).getAsJsonArray(), type));
         }
         return null;
+    }
+
+    @Override
+    public void setKey(String UUID, String key) {
+        File settingsLoc = new File("./settings/user-settings/" + getUserID(UUID) + "/" + UUID + "/settings.json");
+        JsonObject obj = new JsonParser().parse(Reader.readJson(settingsLoc)).getAsJsonObject();
+        obj.remove("key");
+        obj.add("key", new JsonParser().parse(key));
+        Writers.writeFile(settingsLoc, obj.toString());
     }
 }

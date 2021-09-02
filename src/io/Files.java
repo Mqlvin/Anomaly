@@ -39,5 +39,6 @@ public class Files {
 
         Writers.writeFile(new File("./data/settings/%default.json"), HTTPClient.requestJson("https://mqlvin.github.io/api/player-settings"));
         Writers.writeFile(new File("./data/%mail-template.html"), HTTPClient.requestString("https://mqlvin.github.io/api/mail-template.txt"));
+        Writers.writeFile(new File("./settings/%default-settings.json"), HTTPClient.requestJson("https://mqlvin.github.io/api/default-settings"));
     }
 }

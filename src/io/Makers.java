@@ -15,7 +15,6 @@ public class Makers {
     }
 
     public static void checkSettings(String uuid) {
-
         File file = new File("./settings/user-settings/");
     }
 }

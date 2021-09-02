@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Users {
-    public static void addUser(String uuid, Integer id) {
+    public static void createUser(String uuid, Integer id) {
         String userid = "";
         if(id == -1) { // Not creating a user under a pre-existing account, so create a new user ID folder.
             File ids = new File("./settings/user-settings");
@@ -28,23 +28,24 @@ public class Users {
                 userid = "000001";
             } else {
                 Arrays.sort(idNames);
-                System.out.println(Arrays.toString(idNames));
                 userid = String.valueOf(Integer.parseInt(idNames[idNames.length - 1]) + 1);
             }
         } else {
             userid = id.toString();
         }
         userid = toId(userid);
-        System.out.println(userid);
 
         makeCache();
+
+        if(new JsonParser().parse(Reader.readJson(new File("./settings/user-settings/ids.json"))).getAsJsonObject().has(uuid)) {
+            return;
+        }
 
         File newFolder = new File("./settings/user-settings/" + userid + "/" + uuid);
         Makers.makeDir(newFolder);
         JsonObject cache = new JsonParser().parse(Reader.readJson(new File("./settings/user-settings/ids.json"))).getAsJsonObject();
         cache.add(uuid, new JsonParser().parse(userid)); // Adds UUID to ID.
         JsonObject idToUUID = new JsonParser().parse(Reader.readJson(new File("./settings/user-settings/groups.json"))).getAsJsonObject();
-        System.out.println(idToUUID.toString());
         if(idToUUID.has(userid)) { // Adds ID to list of UUIDs.
             JsonArray players = idToUUID.getAsJsonArray(userid);
             if(!players.contains(new JsonParser().parse(uuid))) {
@@ -60,6 +61,16 @@ public class Users {
         }
         Writers.writeFile(new File("./settings/user-settings/ids.json"), cache.toString());
         Writers.writeFile(new File("./settings/user-settings/groups.json"), idToUUID.toString());
+
+        // Cache has now been added so I need to actually work on what needs to be done.
+
+        Makers.makeDir(new File("./settings/user-settings/" + userid));
+        Makers.makeDir(new File("./settings/user-settings/" + userid + "/" + uuid));
+
+        File userSettings = new File("./settings/user-settings/" + userid + "/" + uuid + "/settings.json");
+        if(!userSettings.exists()) {
+            Writers.writeFile(userSettings, Reader.readJson(new File("./settings/%default-settings.json")));
+        }
     }
 
     public static String toId(String id) { // Just a function to add the 0's on the end of the ID because I am lazy and I don't want to type it out each time.

@@ -33,10 +33,19 @@ public class Anomaly {
         BackupClearer.removeOldBackups();
 
         players.add(Mojang.getUUID("Mqlvin"));
+
+        /*
+        Users.createUser(Mojang.getUUID("Veales"), -1);
+        UserAPI users = new UserAPI();
+        users.setKey(Mojang.getUUID("Veales"), "abc123");
+         */
+
+        /*
         UserAPI users = new UserAPI();
         System.out.println(users.getUserID(Mojang.getUUID("Veales")));
         ArrayList<String> newPlayers = users.getUUIDs("2");
         System.out.println(newPlayers.toString());
+         */
 
         /*
         CacheDirs.makeDirs(players);

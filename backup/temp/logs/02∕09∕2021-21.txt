@@ -1,0 +1,16 @@
+02/09/2021 - 20:39 - Anomaly runtime log.
+[20:39:04] [/INFO] The previous log was successfully zipped.
+[20:39:04] [/WARN] .\runtime directory was unsuccessfully created. Maybe it already exists?
+[20:39:04] [/WARN] .\runtime\user-settings directory was unsuccessfully created. Maybe it already exists?
+[20:39:04] [/WARN] .\runtime\settings directory was unsuccessfully created. Maybe it already exists?
+[20:39:04] [/WARN] .\runtime\logs directory was unsuccessfully created. Maybe it already exists?
+[20:39:04] [/WARN] .\backup directory was unsuccessfully created. Maybe it already exists?
+[20:39:04] [/WARN] .\settings directory was unsuccessfully created. Maybe it already exists?
+[20:39:04] [/WARN] .\data directory was unsuccessfully created. Maybe it already exists?
+[20:39:04] [/WARN] .\data\cache directory was unsuccessfully created. Maybe it already exists?
+[20:39:04] [/WARN] .\data\settings directory was unsuccessfully created. Maybe it already exists?
+[20:39:04] [/WARN] .\data\playerdata directory was unsuccessfully created. Maybe it already exists?
+[20:39:04] [/WARN] .\data\response directory was unsuccessfully created. Maybe it already exists?
+[20:39:05] [/INFO] Backup successfully created!
+[20:39:05] [/WARN] .\settings\user-settings\000002\8a19b1fe50464fdeac7066242d5072b2 directory was unsuccessfully created. Maybe it already exists?
+[20:39:05] [/WARN] .\settings\user-settings\000002\d7ae0e344b98453fb98cf4284c9fd420 directory was unsuccessfully created. Maybe it already exists?

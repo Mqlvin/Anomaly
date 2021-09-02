@@ -10,6 +10,7 @@ import log.Archiver;
 import log.LogClearer;
 import log.Logger;
 import user.Users;
+import user.wrapper.UserAPI;
 import wrapper.HypixelPlayer;
 
 import java.util.ArrayList;
@@ -32,7 +33,10 @@ public class Anomaly {
         BackupClearer.removeOldBackups();
 
         players.add(Mojang.getUUID("Mqlvin"));
-        Users.addUser(Mojang.getUUID("Mqlvin"), -1);
+        UserAPI users = new UserAPI();
+        System.out.println(users.getUserID(Mojang.getUUID("Veales")));
+        ArrayList<String> newPlayers = users.getUUIDs("2");
+        System.out.println(newPlayers.toString());
 
         /*
         CacheDirs.makeDirs(players);

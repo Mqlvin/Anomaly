@@ -1,14 +1,14 @@
-31/08/2021 - 20:21 - Anomaly runtime log.
-[20:21:53] [/INFO] The previous log was successfully zipped.
-[20:21:53] [/WARN] .\runtime directory was unsuccessfully created. Maybe it already exists?
-[20:21:53] [/WARN] .\runtime\user-settings directory was unsuccessfully created. Maybe it already exists?
-[20:21:53] [/WARN] .\runtime\settings directory was unsuccessfully created. Maybe it already exists?
-[20:21:53] [/WARN] .\runtime\logs directory was unsuccessfully created. Maybe it already exists?
-[20:21:53] [/WARN] .\backup directory was unsuccessfully created. Maybe it already exists?
-[20:21:53] [/WARN] .\settings directory was unsuccessfully created. Maybe it already exists?
-[20:21:53] [/WARN] .\data directory was unsuccessfully created. Maybe it already exists?
-[20:21:53] [/WARN] .\data\cache directory was unsuccessfully created. Maybe it already exists?
-[20:21:53] [/WARN] .\data\settings directory was unsuccessfully created. Maybe it already exists?
-[20:21:53] [/WARN] .\data\playerdata directory was unsuccessfully created. Maybe it already exists?
-[20:21:53] [/WARN] .\data\response directory was unsuccessfully created. Maybe it already exists?
-[20:21:54] [/INFO] Backup successfully created!
+02/09/2021 - 20:55 - Anomaly runtime log.
+[20:55:46] [/INFO] The previous log was successfully zipped.
+[20:55:46] [/WARN] .\runtime directory was unsuccessfully created. Maybe it already exists?
+[20:55:46] [/WARN] .\runtime\user-settings directory was unsuccessfully created. Maybe it already exists?
+[20:55:46] [/WARN] .\runtime\settings directory was unsuccessfully created. Maybe it already exists?
+[20:55:46] [/WARN] .\runtime\logs directory was unsuccessfully created. Maybe it already exists?
+[20:55:46] [/WARN] .\backup directory was unsuccessfully created. Maybe it already exists?
+[20:55:46] [/WARN] .\settings directory was unsuccessfully created. Maybe it already exists?
+[20:55:46] [/WARN] .\data directory was unsuccessfully created. Maybe it already exists?
+[20:55:46] [/WARN] .\data\cache directory was unsuccessfully created. Maybe it already exists?
+[20:55:46] [/WARN] .\data\settings directory was unsuccessfully created. Maybe it already exists?
+[20:55:46] [/WARN] .\data\playerdata directory was unsuccessfully created. Maybe it already exists?
+[20:55:46] [/WARN] .\data\response directory was unsuccessfully created. Maybe it already exists?
+[20:55:47] [/INFO] Backup successfully created!

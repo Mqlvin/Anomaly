@@ -34,6 +34,7 @@ public class Anomaly {
         LogClearer.removeOldLogs();
         BackupClearer.removeOldBackups();
 
+        /*
         UserAPI users = new UserAPI();
         Users.createUser(Mojang.getUUID("Mqlvin"), -1);
         Users.createUser(Mojang.getUUID("STiger"), -1);
@@ -41,11 +42,13 @@ public class Anomaly {
         Users.createUser(Mojang.getUUID("Subscwibe"), Integer.parseInt(users.getUserID(Mojang.getUUID("Veales"))));
         Users.createUser(Mojang.getUUID("ToggleOnU"), -1);
         Patch.patchAllUsers();
+         */
 
         /*
         Users.createUser(Mojang.getUUID("Veales"), -1);
         UserAPI users = new UserAPI();
         users.setKey(Mojang.getUUID("Veales"), "abc123");
+        users.setInterval(Mojang.getUUID("Subscwibe"), "30");
          */
 
         /*

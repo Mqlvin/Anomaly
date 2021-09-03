@@ -9,4 +9,5 @@ public interface Wrapper {
     public void initialise(String UUID, String email, String key, String interval);
     public void setKey(String UUID, String key);
     public void setEmail(String UUID, String email);
+    public void setInterval(String UUID, String interval);
 }

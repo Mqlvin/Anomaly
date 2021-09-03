@@ -62,4 +62,13 @@ public class UserAPI implements Wrapper {
         obj.add("email", new JsonParser().parse(email));
         Writers.writeFile(settingsLoc, obj.toString());
     }
+
+    @Override
+    public void setInterval(String UUID, String interval) {
+        File settingsLoc = new File("./settings/user-settings/" + getUserID(UUID) + "/" + UUID + "/settings.json");
+        JsonObject obj = new JsonParser().parse(Reader.readJson(settingsLoc)).getAsJsonObject();
+        obj.remove("interval");
+        obj.add("interval", new JsonParser().parse(interval));
+        Writers.writeFile(settingsLoc, obj.toString());
+    }
 }

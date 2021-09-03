@@ -9,6 +9,7 @@ import io.Files;
 import log.Archiver;
 import log.LogClearer;
 import log.Logger;
+import user.Patch;
 import user.Users;
 import user.wrapper.UserAPI;
 import wrapper.HypixelPlayer;
@@ -32,7 +33,7 @@ public class Anomaly {
         LogClearer.removeOldLogs();
         BackupClearer.removeOldBackups();
 
-        players.add(Mojang.getUUID("Mqlvin"));
+        Patch.patchSettings("abc");
 
         /*
         Users.createUser(Mojang.getUUID("Veales"), -1);

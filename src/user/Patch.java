@@ -20,9 +20,7 @@ public class Patch {
         UserAPI users = new UserAPI();
         File currentSettingsPath = new File("./settings/user-settings/" + users.getUserID(uuid) + "/" + uuid + "/settings.json");
         JsonObject currentSettings = new JsonParser().parse(Reader.readJson(currentSettingsPath)).getAsJsonObject();
-
         ArrayList<String> values = GetAllKeys.get(defaultSettingsObj.toString());
-        System.out.println(values);
 
         for(String key : values) {
             if(!currentSettings.has(key)) {

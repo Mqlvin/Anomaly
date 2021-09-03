@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import io.Makers;
 import io.Reader;
 import io.Writers;
+import user.wrapper.UserAPI;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,13 +35,10 @@ public class Users {
             userid = id.toString();
         }
         userid = toId(userid);
-
         makeCache();
-
         if(new JsonParser().parse(Reader.readJson(new File("./settings/user-settings/ids.json"))).getAsJsonObject().has(uuid)) {
             return;
         }
-
         File newFolder = new File("./settings/user-settings/" + userid + "/" + uuid);
         Makers.makeDir(newFolder);
         JsonObject cache = new JsonParser().parse(Reader.readJson(new File("./settings/user-settings/ids.json"))).getAsJsonObject();
@@ -61,9 +59,7 @@ public class Users {
         }
         Writers.writeFile(new File("./settings/user-settings/ids.json"), cache.toString());
         Writers.writeFile(new File("./settings/user-settings/groups.json"), idToUUID.toString());
-
         // Cache has now been added so I need to actually work on what needs to be done.
-
         Makers.makeDir(new File("./settings/user-settings/" + userid));
         Makers.makeDir(new File("./settings/user-settings/" + userid + "/" + uuid));
 
@@ -83,6 +79,35 @@ public class Users {
             players.add("allPlayers", allPlayers);
             Writers.writeFile(new File("./data/cache/!players.json"), players.toString());
         }
+    }
+
+    public static void removeUser(String UUID) {
+        UserAPI user = new UserAPI();
+        String userid = user.getUserID(UUID);
+
+        File players = new File("./data/cache/!players.json");
+        JsonObject playersObj = new JsonParser().parse(Reader.readJson(players)).getAsJsonObject();
+        JsonArray playersArr = playersObj.getAsJsonArray("allPlayers");
+        if(playersArr.contains(new JsonParser().parse(UUID))) {
+            playersArr.remove(new JsonParser().parse(UUID));
+        }
+        playersObj.remove("allPlayers");
+        if(playersArr.size() != 0) {
+            playersObj.add("allPlayers", playersArr);
+        }
+        Writers.writeFile(players, playersObj.toString());
+
+        File groups = new File("./settings/user-settings/groups.json");
+        JsonObject groupsObj = new JsonParser().parse(Reader.readJson(groups)).getAsJsonObject();
+        JsonArray groupsArr = groupsObj.getAsJsonArray(userid);
+        if(groupsArr.contains(new JsonParser().parse(UUID))) {
+            groupsArr.remove(new JsonParser().parse(UUID));
+        }
+        groupsObj.remove(userid);
+        if(groupsArr.size() != 0) {
+            groupsObj.add(userid, groupsArr);
+        }
+        Writers.writeFile(groups, groupsObj.toString());
     }
 
     public static String toId(String id) { // Just a function to add the 0's on the end of the ID because I am lazy and I don't want to type it out each time.

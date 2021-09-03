@@ -32,6 +32,10 @@ public class Files {
                     }
                 }
             }
+        File allPlayersPath = new File("./data/cache/!players.json");
+        if(!allPlayersPath.exists()) {
+            Writers.writeFile(allPlayersPath, "{}");
+        }
         File keys = new File("./data/keys.json");
         if(!keys.exists()) {
             Writers.writeFile(keys, "{}");

@@ -71,6 +71,18 @@ public class Users {
         if(!userSettings.exists()) {
             Writers.writeFile(userSettings, Reader.readJson(new File("./settings/%default-settings.json")));
         }
+
+        JsonObject players = new JsonParser().parse(Reader.readJson(new File("./data/cache/!players.json"))).getAsJsonObject();
+        JsonArray allPlayers = new JsonArray();
+        if(players.has("allPlayers")) {
+            allPlayers = players.getAsJsonArray("allPlayers");
+        }
+        if(!allPlayers.contains(new JsonParser().parse(uuid))) {
+            allPlayers.add(uuid);
+            players.remove("allPlayers");
+            players.add("allPlayers", allPlayers);
+            Writers.writeFile(new File("./data/cache/!players.json"), players.toString());
+        }
     }
 
     public static String toId(String id) { // Just a function to add the 0's on the end of the ID because I am lazy and I don't want to type it out each time.

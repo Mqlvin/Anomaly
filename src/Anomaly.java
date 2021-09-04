@@ -28,8 +28,6 @@ public class Anomaly {
         LogClearer.removeOldLogs();
         BackupClearer.removeOldBackups();
 
-        Users.createUser(Mojang.getUUID("Subscwibe"), -1);
-
         /*
         UserAPI users = new UserAPI();
         Users.createUser(Mojang.getUUID("Mqlvin"), -1);

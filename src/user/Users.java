@@ -1,40 +1,56 @@
 package user;
 
+import api.mojang.Mojang;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.Makers;
 import io.Reader;
 import io.Writers;
+import log.Logger;
+import log.Severity;
 import user.wrapper.UserAPI;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Users {
     public static void createUser(String uuid, Integer id) {
         String userid = "";
-        if(id == -1) { // Not creating a user under a pre-existing account, so create a new user ID folder.
-            File ids = new File("./settings/user-settings");
-            String[] idNames = ids.list();
-            ArrayList<String> tempFiles = new ArrayList<>();
-            for(String name : idNames) {
-                if(name.length() == 6 && !name.contains(".")) {
-                    tempFiles.add(name);
-                }
-            }
-            idNames = tempFiles.toArray(new String[0]);
-            if(idNames.length == 0) {
-                userid = "000001";
-            } else {
-                Arrays.sort(idNames);
-                userid = String.valueOf(Integer.parseInt(idNames[idNames.length - 1]) + 1);
-            }
+        File deletedUsersPath = new File("./settings/user-settings/deleted.json");
+        JsonObject deletedUsersObj = new JsonParser().parse(Reader.readJson(deletedUsersPath)).getAsJsonObject();
+        if(deletedUsersObj.has(uuid)) {
+            userid = deletedUsersObj.get(uuid).toString().replace("\"", "");
+            deletedUsersObj.remove(uuid);
+            Writers.writeFile(deletedUsersPath, deletedUsersObj.toString());
         } else {
-            userid = id.toString();
+            if(id == -1) { // Not creating a user under a pre-existing account, so create a new user ID folder.
+                File ids = new File("./settings/user-settings");
+                String[] idNames = ids.list();
+                ArrayList<String> tempFiles = new ArrayList<>();
+                for(String name : idNames) {
+                    if(name.length() == 6 && !name.contains(".")) {
+                        tempFiles.add(name);
+                    }
+                }
+                idNames = tempFiles.toArray(new String[0]);
+                if(idNames.length == 0) {
+                    userid = "000001";
+                } else {
+                    Arrays.sort(idNames);
+                    userid = String.valueOf(Integer.parseInt(idNames[idNames.length - 1]) + 1);
+                }
+            } else {
+                userid = id.toString();
+            }
+            userid = toId(userid);
         }
-        userid = toId(userid);
         makeCache();
         if(new JsonParser().parse(Reader.readJson(new File("./settings/user-settings/ids.json"))).getAsJsonObject().has(uuid)) {
             return;
@@ -59,7 +75,9 @@ public class Users {
         }
         Writers.writeFile(new File("./settings/user-settings/ids.json"), cache.toString());
         Writers.writeFile(new File("./settings/user-settings/groups.json"), idToUUID.toString());
+
         // Cache has now been added so I need to actually work on what needs to be done.
+
         Makers.makeDir(new File("./settings/user-settings/" + userid));
         Makers.makeDir(new File("./settings/user-settings/" + userid + "/" + uuid));
 
@@ -81,33 +99,78 @@ public class Users {
         }
     }
 
-    public static void removeUser(String UUID) {
+    public static void removeUser(String uuid) {
         UserAPI user = new UserAPI();
-        String userid = user.getUserID(UUID);
+        String userid = user.getUserID(uuid);
+
+        if(userid == null) {
+            return;
+        }
 
         File players = new File("./data/cache/!players.json");
         JsonObject playersObj = new JsonParser().parse(Reader.readJson(players)).getAsJsonObject();
         JsonArray playersArr = playersObj.getAsJsonArray("allPlayers");
-        if(playersArr.contains(new JsonParser().parse(UUID))) {
-            playersArr.remove(new JsonParser().parse(UUID));
+        if(playersArr == null) {
+            if(playersArr.contains(new JsonParser().parse(uuid))) {
+                playersArr.remove(new JsonParser().parse(uuid));
+            }
+            playersObj.remove("allPlayers");
+            if(playersArr.size() != 0) {
+                playersObj.add("allPlayers", playersArr);
+            }
+            Writers.writeFile(players, playersObj.toString());
         }
-        playersObj.remove("allPlayers");
-        if(playersArr.size() != 0) {
-            playersObj.add("allPlayers", playersArr);
-        }
-        Writers.writeFile(players, playersObj.toString());
 
         File groups = new File("./settings/user-settings/groups.json");
         JsonObject groupsObj = new JsonParser().parse(Reader.readJson(groups)).getAsJsonObject();
         JsonArray groupsArr = groupsObj.getAsJsonArray(userid);
-        if(groupsArr.contains(new JsonParser().parse(UUID))) {
-            groupsArr.remove(new JsonParser().parse(UUID));
+        if(groupsArr != null) {
+            if(groupsArr.contains(new JsonParser().parse(uuid))) {
+                groupsArr.remove(new JsonParser().parse(uuid));
+            }
+            groupsObj.remove(userid);
+            if(groupsArr.size() != 0) {
+                groupsObj.add(userid, groupsArr);
+            }
+            Writers.writeFile(groups, groupsObj.toString());
         }
-        groupsObj.remove(userid);
-        if(groupsArr.size() != 0) {
-            groupsObj.add(userid, groupsArr);
+
+        File ids = new File("./settings/user-settings/ids.json");
+        JsonObject idsObj = new JsonParser().parse(Reader.readJson(ids)).getAsJsonObject();
+        if(idsObj.has(uuid)) {
+            idsObj.remove(uuid);
         }
-        Writers.writeFile(groups, groupsObj.toString());
+        Writers.writeFile(ids, idsObj.toString());
+
+        File useridFolder = new File("./settings/user-settings/" + userid);
+        try {
+            Files.walk(Paths.get(useridFolder.toString())).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+        } catch(IOException e) {
+            Logger.log(e.toString(), Severity.FATAL);
+        }
+        if(useridFolder.exists()) {
+            useridFolder.delete();
+        }
+        if(useridFolder.exists()) {
+            Logger.log("The user " + uuid + " (" + Mojang.getUsername(uuid) + ") was unable to be deleted.", Severity.FATAL);
+        }
+
+        File deletedUsers = new File("./settings/user-settings/deleted.json");
+        JsonObject deletedUsersObj = new JsonParser().parse(Reader.readJson(deletedUsers)).getAsJsonObject();
+        if(!deletedUsersObj.has(uuid)) {
+            deletedUsersObj.add(uuid, new JsonParser().parse(userid));
+        } else if(deletedUsersObj.get(uuid).toString() != userid) {
+            deletedUsersObj.remove(uuid);
+            deletedUsersObj.add(uuid, new JsonParser().parse(userid));
+        }
+        Writers.writeFile(deletedUsers, deletedUsersObj.toString());
+    }
+
+    public static void removeId(String id) {
+        UserAPI users = new UserAPI();
+        for(String user : users.getUUIDs(id)) {
+            removeUser(user);
+        }
     }
 
     public static String toId(String id) { // Just a function to add the 0's on the end of the ID because I am lazy and I don't want to type it out each time.

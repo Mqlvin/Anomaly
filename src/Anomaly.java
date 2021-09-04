@@ -1,19 +1,13 @@
 import api.mojang.Mojang;
 import backup.Backup;
 import backup.BackupClearer;
-import cache.hypixel.CacheDirs;
-import cache.hypixel.Updater;
-import http.HTTPClient;
 import io.Dirs;
 import io.Files;
 import log.Archiver;
 import log.LogClearer;
 import log.Logger;
-import misc.User;
-import user.Patch;
 import user.Users;
 import user.wrapper.UserAPI;
-import wrapper.HypixelPlayer;
 
 import java.util.ArrayList;
 
@@ -33,6 +27,8 @@ public class Anomaly {
 
         LogClearer.removeOldLogs();
         BackupClearer.removeOldBackups();
+
+        Users.createUser(Mojang.getUUID("Subscwibe"), -1);
 
         /*
         UserAPI users = new UserAPI();

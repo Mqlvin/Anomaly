@@ -13,7 +13,6 @@ public class Dirs {
         Makers.makeDir(new File("./settings"));
         Makers.makeDir(new File("./data"));
         Makers.makeDir(new File("./data/cache"));
-        Makers.makeDir(new File("./data/settings"));
         Makers.makeDir(new File("./data/playerdata"));
         Makers.makeDir(new File("./data/response"));
     }

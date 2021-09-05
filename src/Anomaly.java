@@ -7,6 +7,7 @@ import log.Archiver;
 import log.LogClearer;
 import log.Logger;
 import user.Users;
+import user.wrapper.Infractor;
 import user.wrapper.UserAPI;
 
 import java.util.ArrayList;
@@ -27,6 +28,12 @@ public class Anomaly {
 
         LogClearer.removeOldLogs();
         BackupClearer.removeOldBackups();
+
+        /*
+        Infractor infractor = new Infractor();
+        infractor.unbanUser(Mojang.getUUID("Subscwibe"));
+        infractor.unbanUser(Mojang.getUUID("STiger"));
+        */
 
         /*
         UserAPI users = new UserAPI();

@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="anomaly:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/anomaly_jar</output-path>
+    <root id="archive" name="anomaly.jar">
+      <element id="module-output" name="anomaly" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/libs/mail-1.4.7.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/libs/gson-2.8.2.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

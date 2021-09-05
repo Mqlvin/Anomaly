@@ -40,11 +40,15 @@ public class Files {
         if(!keys.exists()) {
             Writers.writeFile(keys, "{}");
         }
-
         File deletedUsers = new File("./settings/user-settings/deleted.json");
         if(!deletedUsers.exists()) {
-            Writers.writeFile(new File("./settings/user-settings/deleted.json"), "{}");
+            Writers.writeFile(deletedUsers, "{}");
         }
+        File bannedUsers = new File("./settings/user-settings/banned.json");
+        if(!bannedUsers.exists()) {
+            Writers.writeFile(bannedUsers, "{}");
+        }
+
         Writers.writeFile(new File("./data/%mail-template.html"), HTTPClient.requestString("https://mqlvin.github.io/api/mail-template.txt"));
         Writers.writeFile(new File("./settings/%default-settings.json"), HTTPClient.requestJson("https://mqlvin.github.io/api/default-settings"));
     }

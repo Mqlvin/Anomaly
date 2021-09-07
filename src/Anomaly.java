@@ -1,19 +1,15 @@
 import api.mojang.Mojang;
 import backup.Backup;
 import backup.BackupClearer;
-import checks.wrapper.Checker;
+import console.gui.GUI;
 import io.Dirs;
 import io.Files;
 import log.Archiver;
 import log.LogClearer;
 import log.Logger;
-import scheduler.Initialise;
+import schedulerrr.Initialise;
 import user.Patch;
-import user.Users;
 import user.wrapper.Infractor;
-import user.wrapper.UserAPI;
-
-import java.util.ArrayList;
 
 public class Anomaly {
     public static final String name = "", version = "", users = "", maxUsers = "";
@@ -31,6 +27,9 @@ public class Anomaly {
         LogClearer.removeOldLogs();
         BackupClearer.removeOldBackups();
 
+        GUI.createFrame();
+
+        /*
         Infractor infractor = new Infractor();
         infractor.banUser(Mojang.getUUID("ToggleOnU"));
         infractor.banUser(Mojang.getUUID("STiger"));
@@ -38,6 +37,7 @@ public class Anomaly {
 
         Patch.patchAllUsers();
         Initialise.init();
+         */
 
         /*
         Checker checker = new Checker();

@@ -1,11 +1,14 @@
 import api.mojang.Mojang;
 import backup.Backup;
 import backup.BackupClearer;
+import checks.wrapper.Checker;
 import io.Dirs;
 import io.Files;
 import log.Archiver;
 import log.LogClearer;
 import log.Logger;
+import scheduler.Initialise;
+import user.Patch;
 import user.Users;
 import user.wrapper.Infractor;
 import user.wrapper.UserAPI;
@@ -14,7 +17,6 @@ import java.util.ArrayList;
 
 public class Anomaly {
     public static final String name = "", version = "", users = "", maxUsers = "";
-    public static ArrayList<String> players = new ArrayList<>();
 
     public static void main(String[] args) {
         Logger.initialiseLogs();
@@ -28,6 +30,20 @@ public class Anomaly {
 
         LogClearer.removeOldLogs();
         BackupClearer.removeOldBackups();
+
+        Infractor infractor = new Infractor();
+        infractor.banUser(Mojang.getUUID("ToggleOnU"));
+        infractor.banUser(Mojang.getUUID("STiger"));
+        infractor.banUser(Mojang.getUUID("Veales"));
+
+        Patch.patchAllUsers();
+        Initialise.init();
+
+        /*
+        Checker checker = new Checker();
+        System.out.println(checker.checkLanguage(Mojang.getUUID("Mqlvin"), 0.1));
+        System.out.println(checker.checkLanguage(Mojang.getUUID("Mqlvin"), 0.9));
+        */
 
         /*
         Infractor infractor = new Infractor();

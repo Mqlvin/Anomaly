@@ -23,10 +23,20 @@ public class Handler {
 
         return null;
     }
+
     public static void setRunning(String uuid, Boolean state) {
         running.set(GetIndex.getIndex(uuid, players), state);
     }
+
     public static void changeSettings(String uuid, Boolean state) {
         changeSettings.set(GetIndex.getIndex(uuid, players), state);
+    }
+
+    public static Boolean shouldRun(String uuid) {
+        return running.get(GetIndex.getIndex(uuid, players));
+    }
+
+    public static Boolean shouldChangeSettings(String uuid) {
+        return changeSettings.get(GetIndex.getIndex(uuid, players));
     }
 }

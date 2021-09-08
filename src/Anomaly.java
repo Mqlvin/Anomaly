@@ -27,7 +27,14 @@ public class Anomaly {
         LogClearer.removeOldLogs();
         BackupClearer.removeOldBackups();
 
-        GUI.createFrame();
+        System.out.println(Boolean.parseBoolean("true"));
+        System.out.println(Boolean.parseBoolean("false"));
+        System.out.println(Boolean.parseBoolean("1"));
+        System.out.println(Boolean.parseBoolean("0"));
+        System.out.println(Boolean.parseBoolean("yes"));
+        System.out.println(Boolean.parseBoolean("no"));
+
+        // GUI.createFrame();
 
         /*
         Infractor infractor = new Infractor();

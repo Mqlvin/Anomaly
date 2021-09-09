@@ -9,10 +9,5 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="gson-2.8.2" level="project" />
     <orderEntry type="library" name="mail-1.4.7" level="project" />
-    <orderEntry type="library" name="MigLayout" level="project" />
-    <orderEntry type="library" name="jxbrowser-7.18" level="project" />
-    <orderEntry type="library" name="jxbrowser-javafx-7.18" level="project" />
-    <orderEntry type="library" name="jxbrowser-swing-7.18" level="project" />
-    <orderEntry type="library" name="jxbrowser-swt-7.18" level="project" />
   </component>
 </module>

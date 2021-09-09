@@ -1,14 +1,23 @@
 package scheduler;
 
+import checks.wrapper.Checker;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import io.Reader;
+import log.Severity;
+import mail.Sender;
+import playerlog.PlayerLog;
 import user.wrapper.UserAPI;
 
 import java.io.File;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Scheduler {
-    public UserAPI users;
+    public UserAPI users = new UserAPI();
+    public Checker checker;
+    public File settingsPath;
 
     public String uuid;
     public String key;
@@ -17,17 +26,25 @@ public class Scheduler {
 
     public Boolean doLanguageChecks;
     public Double languageCheckSensitivity;
-    public JsonObject settings = new JsonObject();
+    public JsonObject settings;
 
     public void init(String uuid_) {
         uuid = uuid_;
-        updateSettings();
+        settingsPath = new File("./settings/user-settings/" + users.getUserID(uuid) + "/" + uuid + "/settings.json");
 
-        startScheduler();
+        Handler.registerPlayer(uuid);
+        updateSettings();
+        startScheduler(interval);
+        System.out.println("hello i made it here");
     }
 
-    private void updateSettings() {
-        settings = new JsonParser().parse(Reader.readJson(new File("./settings/user-settings/" + users.getUserID(uuid) + "/" + uuid + "/settings.json"))).getAsJsonObject();
+    public void updateSettings() {
+        if(settingsPath.exists()) {
+            settings = new JsonParser().parse(Reader.readJson(settingsPath)).getAsJsonObject();
+        } else {
+            PlayerLog.log("No player settings were found upon request. The scheduler has been cancelled.", uuid, Severity.FATAL);
+            Handler.setRunning(uuid, false);
+        }
 
         shouldRun = Handler.shouldRun(uuid);
         setIfHas(SettingType.KEY);
@@ -36,59 +53,94 @@ public class Scheduler {
         setIfHas(SettingType.LANGUAGE_CHECK_SENSITIVITY);
     }
 
-    private void startScheduler() {
+    public void startScheduler(Integer interval) {
+        System.out.println(Handler.shouldRun(uuid));
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(0);
+        Runnable run = () -> {
+            if(Handler.shouldRun(uuid)) {
+                System.out.println("running checks");
+            } else {
+                try {
+                    updateSettings();
+                    // startScheduler(interval);
+                    // executor.shutdown();
+                    System.out.println("hello");
+                } catch(Exception e) {
+                    System.out.println("ex");
+                }
+            }
+        };
+        executor.scheduleAtFixedRate(run, 0, interval, TimeUnit.SECONDS);
 
+        /*
+        TODO: Implement a ScheduledExecutorService class extension.
+        Okay so we make a new class with the ScheduledExecutorService, and then add functions to and stop, start e.g. all logic is hosted in the main Scheduler class, the
+        ScheduledExecutorService is basically just an extension to it, making it easier to run for me.
+         */
     }
 
-    private void setIfHas(SettingType variable) {
+    /*
+    public void checkForRun() {
+        if(Handler.shouldRun(uuid)) {
+            System.out.println("running checks");
+        } else {
+            executor.shutdown();
+            updateSettings();
+            startScheduler(interval);
+        }
+    }
+     */
+
+    /*
+    If you are looking at this project on GitHub, this next method does all the checks, except it just calls more methods lol.
+    It also handles the responses of the checks and runs more methods to do the appropriate warning.
+     */
+
+    public void runChecks() {
+        if(checker.checkLanguage(uuid, languageCheckSensitivity)) {
+            Sender.sendEmail(uuid);
+        }
+    }
+
+    public void setIfHas(SettingType variable) {
         if(variable.equals(SettingType.KEY)) {
             if(settings.has("key") && !settings.get("key").toString().equalsIgnoreCase("%apiKey%")) {
                 key = settings.get("key").toString().replace("\"", "");
             } else {
-                /*
-                PlayerLog.log();
-                The value hasn't been set or the user hasn't been patched.
-                 */
+                PlayerLog.log("The scheduler started however the users API key hasn't been initialized or the value does not exist, current value (" + settings.get("key").toString() + ").", uuid, Severity.FATAL);
             }
         } else if(variable.equals(SettingType.LANGUAGE_DO_CHECK)) {
-            if (settings.has("checkLanguage") && ifTrueOrFalse("checkLanguage")) {
+            if(settings.has("checkLanguage") && isTrueOrFalse("checkLanguage")) {
                 doLanguageChecks = Boolean.parseBoolean(settings.get("checkLanguage").toString().replace("\"", ""));
             } else {
-                /*
-                PlayerLog.log();
-                Probably due to the value not being a boolean or it hasn't been properly patched.
-                 */
+                PlayerLog.log("The requested value of LANGUAGE_DO_CHECK (" + settings.get("checkLanguage").toString() + ") was either not a valid boolean, or doesn't exist.", uuid, Severity.FATAL);
             }
         } else if(variable.equals(SettingType.LANGUAGE_CHECK_SENSITIVITY)) {
-            if (settings.has("languageSensitivity")) {
+            if(settings.has("languageSensitivity") && isSafeDouble("languageSensitivity", 0.01, 0.99)) {
                 languageCheckSensitivity = Double.parseDouble(settings.get("languageSensitivity").toString().replace("\"", ""));
             } else {
-                /*
-                PlayerLog.log();
-                Probably due to not being properly patched.
-                 */
+                PlayerLog.log("The requested value of LANGUAGE_CHECK_SENSITIVITY (" + settings.get("languageSensitivity").toString() + ") was either not a valid double (0.01 -> 0.99) or doesn't exist.", uuid, Severity.FATAL);
             }
         } else if(variable.equals(SettingType.INTERVAL)) {
-            if (settings.has("interval") && isSafeInteger("interval", 5, 300)) {
+            if(settings.has("interval") && isSafeInteger("interval", 5, 300)) {
                 interval = Integer.parseInt(settings.get("interval").toString().replace("\"", ""));
             } else {
-                /*
-                PlayerLog.log();
-                Probably due to incorrect patching or the value for the interval is not between 5 and 300.
-                 */
+                PlayerLog.log("The requested value for the scheduler interval (" + settings.get("interval").toString() + ") exceeded the bounds (5 -> 300).", uuid, Severity.FATAL);
             }
         }
     }
 
-    private Boolean ifTrueOrFalse(String jsonKey) {
+    public Boolean isTrueOrFalse(String jsonKey) {
         return settings.get(jsonKey).toString().equalsIgnoreCase("true") || settings.get(jsonKey).toString().equalsIgnoreCase("false");
     }
 
-    private Boolean isSafeInteger(String jsonKey, Integer lowest, Integer highest) {
-        return Integer.parseInt(settings.get("interval").toString().replace("\"", "")) >= lowest && Integer.parseInt(settings.get("interval").toString().replace("\"", "")) <= highest;
+    public Boolean isSafeInteger(String jsonKey, Integer lowest, Integer highest) {
+        return Integer.parseInt(settings.get(jsonKey).toString().replace("\"", "")) >= lowest && Integer.parseInt(settings.get(jsonKey).toString().replace("\"", "")) <= highest;
     }
 
-    private Boolean isSafeDouble(String jsonKey, Double lowest, Double highest) {
-        return Double.parseDouble(settings.get("interval").toString().replace("\"", "")) >= lowest && Double.parseDouble(settings.get("interval").toString().replace("\"", "")) <= highest;
+    public Boolean isSafeDouble(String jsonKey, Double lowest, Double highest) {
+        return Double.parseDouble(settings.get(jsonKey).toString().replace("\"", "")) >= lowest && Double.parseDouble(settings.get(jsonKey).toString().replace("\"", "")) <= highest;
     }
+
+    // TODO: Could move this to the math package but idm.
 }

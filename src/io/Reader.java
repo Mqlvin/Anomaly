@@ -18,9 +18,19 @@ public class Reader {
             } catch(Exception e) {
                 Logger.log(e.toString(), Severity.FATAL);
             }
-        } else {
-            return "File not found.";
         }
-        return "Error, IO Reader broken.";
+        return null;
+    }
+
+    public static ArrayList<String> readArrayList(File path) {
+        if(path.exists()) {
+            try {
+                ArrayList<String> textFromFile = new ArrayList<>(Files.readAllLines(Paths.get(path.toString())));
+                return textFromFile;
+            } catch(Exception e) {
+                Logger.log(e.toString(), Severity.FATAL);
+            }
+        }
+        return null;
     }
 }

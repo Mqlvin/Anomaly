@@ -14,10 +14,10 @@ import java.util.ArrayList;
 
 public class UserAPI implements Wrapper {
     @Override
-    public String getUserID(String UUID) {
+    public String getUserID(String uuid) {
         JsonObject obj = new JsonParser().parse(Reader.readJson(new File("./settings/user-settings/ids.json"))).getAsJsonObject();
-        if(obj.has(UUID)) {
-            return Users.toId(obj.get(UUID).toString().replace("\"", ""));
+        if(obj.has(uuid)) {
+            return Users.toId(obj.get(uuid).toString().replace("\"", ""));
         }
         return null;
     }
@@ -33,21 +33,18 @@ public class UserAPI implements Wrapper {
     }
 
     @Override
-    public void initialise(String UUID, String email, String key, String interval) {
-        File settingsLoc = new File("./settings/user-settings/" + getUserID(UUID) + "/" + UUID + "/settings.json");
+    public void initialise(String uuid, String email, String key, String interval) {
+        File settingsLoc = new File("./settings/user-settings/" + getUserID(uuid) + "/" + uuid + "/settings.json");
         JsonObject obj = new JsonParser().parse(Reader.readJson(settingsLoc)).getAsJsonObject();
-        obj.remove("email");
-        obj.add("email", new JsonParser().parse(email));
-        obj.remove("key");
-        obj.add("key", new JsonParser().parse(key));
-        obj.remove("interval");
-        obj.add("interval", new JsonParser().parse(interval));
+        setEmail(uuid, email);
+        setKey(uuid, key);
+        setInterval(uuid, interval);
         Writers.writeFile(settingsLoc, obj.toString());
     }
 
     @Override
-    public void setKey(String UUID, String key) {
-        File settingsLoc = new File("./settings/user-settings/" + getUserID(UUID) + "/" + UUID + "/settings.json");
+    public void setKey(String uuid, String key) {
+        File settingsLoc = new File("./settings/user-settings/" + getUserID(uuid) + "/" + uuid + "/settings.json");
         JsonObject obj = new JsonParser().parse(Reader.readJson(settingsLoc)).getAsJsonObject();
         obj.remove("key");
         obj.add("key", new JsonParser().parse(key));
@@ -55,17 +52,19 @@ public class UserAPI implements Wrapper {
     }
 
     @Override
-    public void setEmail(String UUID, String email) {
-        File settingsLoc = new File("./settings/user-settings/" + getUserID(UUID) + "/" + UUID + "/settings.json");
+    public void setEmail(String uuid, String email) {
+        File settingsLoc = new File("./settings/user-settings/" + getUserID(uuid) + "/" + uuid + "/settings.json");
         JsonObject obj = new JsonParser().parse(Reader.readJson(settingsLoc)).getAsJsonObject();
-        obj.remove("email");
-        obj.add("email", new JsonParser().parse(email));
-        Writers.writeFile(settingsLoc, obj.toString());
+        if(email.contains(".") && email.contains("@")) {
+            obj.remove("email");
+            obj.add("email", new JsonParser().parse(email));
+            Writers.writeFile(settingsLoc, obj.toString());
+        }
     }
 
     @Override
-    public void setInterval(String UUID, String interval) {
-        File settingsLoc = new File("./settings/user-settings/" + getUserID(UUID) + "/" + UUID + "/settings.json");
+    public void setInterval(String uuid, String interval) {
+        File settingsLoc = new File("./settings/user-settings/" + getUserID(uuid) + "/" + uuid + "/settings.json");
         JsonObject obj = new JsonParser().parse(Reader.readJson(settingsLoc)).getAsJsonObject();
         obj.remove("interval");
         obj.add("interval", new JsonParser().parse(interval));

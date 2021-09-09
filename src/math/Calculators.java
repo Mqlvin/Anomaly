@@ -12,7 +12,6 @@ public class Calculators {
         for(int i = 0; i < nums.size() - 1; i++) {
             calculated.add(i, Double.parseDouble(nums.get(i).toString()) / highest);
         }
-
         return calculated;
     }
 }

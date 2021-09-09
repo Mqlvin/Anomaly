@@ -1,18 +1,19 @@
 import api.mojang.Mojang;
 import backup.Backup;
 import backup.BackupClearer;
-import console.gui.GUI;
 import io.Dirs;
 import io.Files;
 import log.Archiver;
 import log.LogClearer;
 import log.Logger;
-import schedulerrr.Initialise;
+import scheduler.Scheduler;
 import user.Patch;
-import user.wrapper.Infractor;
+import user.wrapper.UserAPI;
+
+import java.util.ArrayList;
 
 public class Anomaly {
-    public static final String name = "", version = "", users = "", maxUsers = "";
+    public static UserAPI users = new UserAPI();
 
     public static void main(String[] args) {
         Logger.initialiseLogs();
@@ -27,12 +28,15 @@ public class Anomaly {
         LogClearer.removeOldLogs();
         BackupClearer.removeOldBackups();
 
-        System.out.println(Boolean.parseBoolean("true"));
-        System.out.println(Boolean.parseBoolean("false"));
-        System.out.println(Boolean.parseBoolean("1"));
-        System.out.println(Boolean.parseBoolean("0"));
-        System.out.println(Boolean.parseBoolean("yes"));
-        System.out.println(Boolean.parseBoolean("no"));
+        Patch.patchAllUsers();
+
+        ArrayList<String> players = new ArrayList<>();
+        players.add(Mojang.getUUID("Mqlvin"));
+        users.initialise(Mojang.getUUID("Mqlvin"), "henryviant@gmail.com", "d8e7f0b1-6dcf-4a96-993c-8f11cf2fe15b", "5");
+        for(String p : players) {
+            Scheduler sch = new Scheduler();
+            sch.init(p);
+        }
 
         // GUI.createFrame();
 

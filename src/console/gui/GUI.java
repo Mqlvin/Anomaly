@@ -1,22 +1,7 @@
 package console.gui;
 
-import com.teamdev.jxbrowser.browser.Browser;
-import com.teamdev.jxbrowser.engine.Engine;
-import com.teamdev.jxbrowser.view.javafx.BrowserView;
-import io.Reader;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-
 import javax.swing.*;
-import javax.swing.text.Document;
-import javax.swing.text.html.HTMLEditorKit;
-import javax.swing.text.html.StyleSheet;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-
-import static com.teamdev.jxbrowser.engine.RenderingMode.HARDWARE_ACCELERATED;
 
 public class GUI {
     public static void createFrame() {

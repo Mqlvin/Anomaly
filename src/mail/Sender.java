@@ -37,7 +37,6 @@ public class Sender {
             mail.setSubject("Account security alert! - Anomaly");
             mail.setContent(html, "text/html");
             Transport.send(mail);
-            System.out.println("Warning sent.");
         } catch(MessagingException e) {
             Logger.log(e.toString(), Severity.FATAL);
         }

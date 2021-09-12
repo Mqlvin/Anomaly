@@ -1,4 +1,4 @@
-package schedulerrr;
+package oldscheduler;
 
 import api.hypixel.Language;
 import api.mojang.Mojang;

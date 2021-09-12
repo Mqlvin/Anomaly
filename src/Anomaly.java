@@ -6,6 +6,7 @@ import io.Files;
 import log.Archiver;
 import log.LogClearer;
 import log.Logger;
+import profile.SchedulerProfile;
 import scheduler.Scheduler;
 import user.Patch;
 import user.wrapper.UserAPI;
@@ -30,13 +31,22 @@ public class Anomaly {
 
         Patch.patchAllUsers();
 
+        /*
         ArrayList<String> players = new ArrayList<>();
         players.add(Mojang.getUUID("Mqlvin"));
-        users.initialise(Mojang.getUUID("Mqlvin"), "henryviant@gmail.com", "d8e7f0b1-6dcf-4a96-993c-8f11cf2fe15b", "5");
+        users.setInterval(Mojang.getUUID("Mqlvin"), "5");
         for(String p : players) {
             Scheduler sch = new Scheduler();
             sch.init(p);
         }
+         */
+
+        SchedulerProfile prof = new SchedulerProfile(Mojang.getUUID("Mqlvin")); // Created the SchedulerProfile object.
+        System.out.println(prof.getEmail()); // "null"
+        users.setEmail(Mojang.getUUID("Mqlvin"), "henryviant@gmail.com"); // Called an update on the email key.
+        System.out.println(prof.getEmail()); // "null"
+        prof.reloadSettings(); // Called a reload so all settings would be reloaded.
+        System.out.println(prof.getEmail()); // "henryviant@gmail.com"
 
         // GUI.createFrame();
 

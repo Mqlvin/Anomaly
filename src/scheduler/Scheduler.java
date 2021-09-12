@@ -45,12 +45,13 @@ public class Scheduler {
             PlayerLog.log("No player settings were found upon request. The scheduler has been cancelled.", uuid, Severity.FATAL);
             Handler.setRunning(uuid, false);
         }
-
+        /*
         shouldRun = Handler.shouldRun(uuid);
         setIfHas(SettingType.KEY);
         setIfHas(SettingType.INTERVAL);
         setIfHas(SettingType.LANGUAGE_DO_CHECK);
         setIfHas(SettingType.LANGUAGE_CHECK_SENSITIVITY);
+         */
     }
 
     public void startScheduler(Integer interval) {
@@ -61,10 +62,11 @@ public class Scheduler {
                 System.out.println("running checks");
             } else {
                 try {
-                    updateSettings();
-                    // startScheduler(interval);
-                    // executor.shutdown();
-                    System.out.println("hello");
+                    if(!Handler.shouldChangeSettings(uuid)) {
+                        System.out.println("change settings? " + Handler.shouldChangeSettings(uuid));
+                        executor.shutdown();
+                        updateSettings();
+                    }
                 } catch(Exception e) {
                     System.out.println("ex");
                 }
@@ -101,7 +103,7 @@ public class Scheduler {
             Sender.sendEmail(uuid);
         }
     }
-
+    /*
     public void setIfHas(SettingType variable) {
         if(variable.equals(SettingType.KEY)) {
             if(settings.has("key") && !settings.get("key").toString().equalsIgnoreCase("%apiKey%")) {
@@ -129,18 +131,9 @@ public class Scheduler {
             }
         }
     }
+     */
 
-    public Boolean isTrueOrFalse(String jsonKey) {
-        return settings.get(jsonKey).toString().equalsIgnoreCase("true") || settings.get(jsonKey).toString().equalsIgnoreCase("false");
-    }
 
-    public Boolean isSafeInteger(String jsonKey, Integer lowest, Integer highest) {
-        return Integer.parseInt(settings.get(jsonKey).toString().replace("\"", "")) >= lowest && Integer.parseInt(settings.get(jsonKey).toString().replace("\"", "")) <= highest;
-    }
-
-    public Boolean isSafeDouble(String jsonKey, Double lowest, Double highest) {
-        return Double.parseDouble(settings.get(jsonKey).toString().replace("\"", "")) >= lowest && Double.parseDouble(settings.get(jsonKey).toString().replace("\"", "")) <= highest;
-    }
 
     // TODO: Could move this to the math package but idm.
 }

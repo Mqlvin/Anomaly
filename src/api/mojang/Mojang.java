@@ -24,7 +24,7 @@ public class Mojang {
         }
         String response = HTTPClient.requestJson("https://api.mojang.com/users/profiles/minecraft/" + username);
         if(!response.startsWith("{") || response == null) {
-            return "Invalid username.";
+            return null;
         }
         JsonObject obj = parser.parse(response).getAsJsonObject();
         String UUID = obj.get("id").toString().replace("\n", "").replace("\r", "").replace("\"", "");
@@ -51,7 +51,7 @@ public class Mojang {
         }
         String response = HTTPClient.requestJson("https://api.mojang.com/user/profiles/" + UUID + "/names");
         if(!response.startsWith("[") || response == null) {
-            return "Invalid UUID.";
+            return null;
         }
         JsonArray arr = parser.parse(response).getAsJsonArray();
         JsonObject activeData = parser.parse(arr.get(arr.size() - 1).toString()).getAsJsonObject();

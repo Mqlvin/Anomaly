@@ -1,4 +1,4 @@
-package warns;
+package warn;
 
 import com.google.gson.JsonObject;
 import mail.Sender;

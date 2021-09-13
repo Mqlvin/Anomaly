@@ -12,8 +12,8 @@ import java.util.Date;
 import static http.HTTPClient.requestJson;
 
 public class SessionTime {
-    public static String get(String uuid, String apiKey) {
-        String response = requestJson("https://api.hypixel.net/player?key=" + apiKey + "&uuid=" + uuid);
+    public static String get(String uuid, String key) {
+        String response = requestJson("https://api.hypixel.net/player?key=" + key + "&uuid=" + uuid);
         JsonObject obj = new JsonParser().parse(response).getAsJsonObject();
         long lastLogin = Long.parseLong(obj.getAsJsonObject("player").get("lastLogin").toString().replace("\"", "").replace("\"", ""));
         long lastLogout = Long.parseLong(obj.getAsJsonObject("player").get("lastLogout").toString().replace("\"", "").replace("\"", ""));

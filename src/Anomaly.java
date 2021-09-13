@@ -7,11 +7,10 @@ import log.Archiver;
 import log.LogClearer;
 import log.Logger;
 import profile.SchedulerProfile;
+import scheduler.Handler;
 import scheduler.Scheduler;
 import user.Patch;
 import user.wrapper.UserAPI;
-
-import java.util.ArrayList;
 
 public class Anomaly {
     public static UserAPI users = new UserAPI();
@@ -31,6 +30,17 @@ public class Anomaly {
 
         Patch.patchAllUsers();
 
+        Handler.checkAccounts.add(new SchedulerProfile(Mojang.getUUID("Mqlvin")));
+        Handler.checkAccounts.add(new SchedulerProfile(Mojang.getUUID("Veales")));
+        Handler.checkAccounts.add(new SchedulerProfile(Mojang.getUUID("STiger")));
+        Scheduler.startScheduler();
+
+        /*
+        SchedulerProfile prof = new SchedulerProfile(Mojang.getUUID("Mqlvin")); // Created the SchedulerProfile object.
+        users.setInterval(prof.getUUID(), "10");
+        prof.reloadSettings(); // Called a reload so all settings would be reloaded.
+         */
+
         /*
         ArrayList<String> players = new ArrayList<>();
         players.add(Mojang.getUUID("Mqlvin"));
@@ -40,13 +50,6 @@ public class Anomaly {
             sch.init(p);
         }
          */
-
-        SchedulerProfile prof = new SchedulerProfile(Mojang.getUUID("Mqlvin")); // Created the SchedulerProfile object.
-        System.out.println(prof.getEmail()); // "null"
-        users.setEmail(Mojang.getUUID("Mqlvin"), "henryviant@gmail.com"); // Called an update on the email key.
-        System.out.println(prof.getEmail()); // "null"
-        prof.reloadSettings(); // Called a reload so all settings would be reloaded.
-        System.out.println(prof.getEmail()); // "henryviant@gmail.com"
 
         // GUI.createFrame();
 

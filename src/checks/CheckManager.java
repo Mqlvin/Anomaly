@@ -1,14 +1,19 @@
 package checks;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import io.Reader;
-import user.wrapper.UserAPI;
-
-import java.io.File;
+import api.hypixel.Language;
+import checks.wrapper.Checker;
+import database.LanguageDB;
+import profile.SchedulerProfile;
+import warn.Warn;
 
 public class CheckManager {
-    public static void runChecks(String uuid, JsonObject settings) {
-
+    public static Checker check = new Checker();
+    public static void runChecks(SchedulerProfile prof) {
+        if(prof.doLanguageChecks()) {
+            if(check.checkLanguage(prof.getUUID(), prof.getLanguageSensitivity())) {
+                Warn.sendWarning(prof);
+            }
+            LanguageDB.addLanguage(prof.getUUID(), LanguageDB.toEnum(Language.get(prof.getUUID(), prof.getKey())));
+        }
     }
 }

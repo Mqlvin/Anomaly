@@ -1,42 +1,36 @@
 package scheduler;
 
-import misc.GetIndex;
+import checks.CheckManager;
+import checks.wrapper.Checker;
+import profile.SchedulerProfile;
 
 import java.util.ArrayList;
 
+import static java.lang.Math.floor;
+
 public class Handler {
+    public static ArrayList<SchedulerProfile> checkAccounts = new ArrayList<>();
 
-    /*
-    "players" - Usage: No current usage but can be used to see all loaded players.
-    "running" - Usage: For the individual schedulers to detect whether their player should be running detections.
-    "changeSettings" - Usage: To detect when the schedulers need to update their settings, including JSON settings, running e.g.
-     */
-
-    public static volatile ArrayList<String> players = new ArrayList<>();
-    public static volatile ArrayList<Boolean> running = new ArrayList<>();
-    public static volatile ArrayList<Boolean> changeSettings = new ArrayList<>();
-
-    public static Integer registerPlayer(String uuid) {
-        players.add(uuid);
-        running.add(false);
-        changeSettings.add(false);
-
-        return null;
-    }
-
-    public static void setRunning(String uuid, Boolean state) {
-        running.set(GetIndex.getIndex(uuid, players), state);
-    }
-
-    public static void changeSettings(String uuid, Boolean state) {
-        changeSettings.set(GetIndex.getIndex(uuid, players), state);
-    }
-
-    public static Boolean shouldRun(String uuid) {
-        return running.get(GetIndex.getIndex(uuid, players));
-    }
-
-    public static Boolean shouldChangeSettings(String uuid) {
-        return changeSettings.get(GetIndex.getIndex(uuid, players));
+    public static void handleChecks(Integer i) {
+        for(SchedulerProfile prof : checkAccounts) {
+            if(5 > prof.interval() && 300 < prof.interval()) {
+                continue;
+            } else if(!prof.enabled()) {
+                continue;
+            } else if(!prof.doLanguageChecks()) { // TODO: Always update this to ! all the checks.
+                continue;
+            } else if(!prof.shouldSendEmail() && !prof.shouldSendDiscordMessage()) { // TODO: Always update this value based on the new way to send warnings.
+                continue;
+            }
+            Double tempDivide = Double.parseDouble(i.toString()) / Double.parseDouble(prof.interval().toString());
+            if(floor(tempDivide) == tempDivide) {
+                CheckManager.runChecks(prof);
+                System.out.println("Checking: " + prof.getUsername());
+            }
+            /*
+            Quick FYI on how this part works:
+            if temdDiv rounded == tempDivide then we run the script. This means it runs on the interval the user selects.
+             */
+        }
     }
 }

@@ -66,8 +66,22 @@ public class UserAPI implements Wrapper {
     public void setInterval(String uuid, String interval) {
         File settingsLoc = new File("./settings/user-settings/" + getUserID(uuid) + "/" + uuid + "/settings.json");
         JsonObject obj = new JsonParser().parse(Reader.readJson(settingsLoc)).getAsJsonObject();
-        obj.remove("interval");
-        obj.add("interval", new JsonParser().parse(interval));
-        Writers.writeFile(settingsLoc, obj.toString());
+        if(isSafeInteger("interval", obj, 5, 300)) {
+            obj.remove("interval");
+            obj.add("interval", new JsonParser().parse(interval));
+            Writers.writeFile(settingsLoc, obj.toString());
+        }
+    }
+
+    private Boolean isTrueOrFalse(String jsonKey, JsonObject settings) {
+        return settings.get(jsonKey).toString().equalsIgnoreCase("true") || settings.get(jsonKey).toString().equalsIgnoreCase("false");
+    }
+
+    private Boolean isSafeInteger(String jsonKey, JsonObject settings, Integer lowest, Integer highest) {
+        return Integer.parseInt(settings.get(jsonKey).toString().replace("\"", "")) >= lowest && Integer.parseInt(settings.get(jsonKey).toString().replace("\"", "")) <= highest;
+    }
+
+    private Boolean isSafeDouble(String jsonKey, JsonObject settings,  Double lowest, Double highest) {
+        return Double.parseDouble(settings.get(jsonKey).toString().replace("\"", "")) >= lowest && Double.parseDouble(settings.get(jsonKey).toString().replace("\"", "")) <= highest;
     }
 }

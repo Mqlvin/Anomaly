@@ -33,7 +33,6 @@ public class Checker implements ChecksWr {
 
         ArrayList<Double> response = new ArrayList<>(Calculators.getDifference(languages));
         Collections.sort(response);
-        // The non-dynamic float can alter the sensitivity of the ACP.
         return response.get(0) < sensitivity;
     }
 }

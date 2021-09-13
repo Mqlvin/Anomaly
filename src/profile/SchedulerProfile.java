@@ -16,8 +16,8 @@ public class SchedulerProfile implements CheckProfileInterface {
     private File settingsPath;
     private JsonObject settings;
 
-    private Integer interval;
-    private Boolean enabled;
+    private Integer interval = 120;
+    private Boolean enabled = false;
     private String username;
     private String uuid;
 
@@ -63,55 +63,56 @@ public class SchedulerProfile implements CheckProfileInterface {
             // LOL I mean if it can't set the username variable I would be surprised if it would be able to log this message, and with the correct UUID/username but why not :smirk:
         }
         if(settings.has("interval") && isSafeInteger("interval", 5, 300)) {
-            interval = Integer.parseInt(settings.get("interval").toString());
+            interval = Integer.parseInt(settings.get("interval").toString().replace("\"", ""));
+            PlayerLog.log("The \"interval\" has been set to " + uuid + " (" + Mojang.getUsername(uuid) + ")!", uuid, Severity.INFO);
         } else {
             PlayerLog.log("The \"interval\" key wasn't found in " + uuid + " (" + Mojang.getUsername(uuid) + ")'s settings file.", uuid, Severity.FATAL);
         }
         if(settings.has("enabled") && isTrueOrFalse("enabled")) {
-            enabled = Boolean.parseBoolean(settings.get("enabled").toString());
+            enabled = Boolean.parseBoolean(settings.get("enabled").toString().replace("\"", ""));
         } else {
             PlayerLog.log("The \"enabled\" key wasn't found in " + uuid + " (" + Mojang.getUsername(uuid) + ")'s settings file.", uuid, Severity.FATAL);
         }
         if(settings.has("key") && !settings.get("key").toString().equalsIgnoreCase("%apiKey%")) {
-            key = settings.get("key").toString();
+            key = settings.get("key").toString().replace("\"", "");
         } else {
             PlayerLog.log("The \"key\" key wasn't found in " + uuid + " (" + Mojang.getUsername(uuid) + ")'s settings file.", uuid, Severity.FATAL);
         }
-        if(settings.has("discordID")) {
-            discordID = settings.get("discordID").toString();
+        if(settings.has("discordID") && settings.get("discordID").toString().equalsIgnoreCase("%discordID%")) {
+            discordID = settings.get("discordID").toString().replace("\"", "");
             // TODO: Add Discord ID support.
         } else {
             PlayerLog.log("The \"discordID\" key wasn't found in " + uuid + " (" + Mojang.getUsername(uuid) + ")'s settings file.", uuid, Severity.FATAL);
         }
         if(settings.has("email") && settings.get("email").toString().contains("@") && settings.get("email").toString().contains(".") && !settings.get("email").toString().equalsIgnoreCase("%email%")) {
-            email = settings.get("email").toString();
+            email = settings.get("email").toString().replace("\"", "");
         } else {
             PlayerLog.log("The \"email\" key wasn't found in " + uuid + " (" + Mojang.getUsername(uuid) + ")'s settings file.", uuid, Severity.FATAL);
         }
         if(settings.has("timezone")) {
-            timezone = settings.get("timezone").toString();
+            timezone = settings.get("timezone").toString().replace("\"", "");
         } else {
             PlayerLog.log("The \"timezone\" key wasn't found in " + uuid + " (" + Mojang.getUsername(uuid) + ")'s settings file.", uuid, Severity.FATAL);
         }
 
         if(settings.has("sendEmail") && isTrueOrFalse("sendEmail")) {
-            shouldSendEmail = Boolean.parseBoolean(settings.get("sendEmail").toString());
+            shouldSendEmail = Boolean.parseBoolean(settings.get("sendEmail").toString().replace("\"", ""));
         } else {
             PlayerLog.log("The \"sendEmail\" key wasn't found in " + uuid + " (" + Mojang.getUsername(uuid) + ")'s settings file.", uuid, Severity.FATAL);
         }
         if(settings.has("sendDiscordMessage") && isTrueOrFalse("sendDiscordMessage")) {
-            shouldSendDiscordMessage = Boolean.parseBoolean(settings.get("sendDiscordMessage").toString());
+            shouldSendDiscordMessage = Boolean.parseBoolean(settings.get("sendDiscordMessage").toString().replace("\"", ""));
         } else {
             PlayerLog.log("The \"sendDiscordMessage\" key wasn't found in " + uuid + " (" + Mojang.getUsername(uuid) + ")'s settings file.", uuid, Severity.FATAL);
         }
 
         if(settings.has("checkLanguage") && isTrueOrFalse("checkLanguage")) {
-            doLanguageChecks = Boolean.parseBoolean(settings.get("checkLanguage").toString());
+            doLanguageChecks = Boolean.parseBoolean(settings.get("checkLanguage").toString().replace("\"", ""));
         } else {
             PlayerLog.log("The \"checkLanguage\" key wasn't found in " + uuid + " (" + Mojang.getUsername(uuid) + ")'s settings file.", uuid, Severity.FATAL);
         }
         if(settings.has("languageSensitivity") && isSafeDouble("languageSensitivity", 0.01, 0.99)) {
-            languageSensitivity = Double.parseDouble(settings.get("languageSensitivity").toString());
+            languageSensitivity = Double.parseDouble(settings.get("languageSensitivity").toString().replace("\"", ""));
         } else {
             PlayerLog.log("The \"languageSensitivity\" key wasn't found in " + uuid + " (" + Mojang.getUsername(uuid) + ")'s settings file.", uuid, Severity.FATAL);
         }
@@ -214,7 +215,7 @@ public class SchedulerProfile implements CheckProfileInterface {
     }
 
     private Boolean isTrueOrFalse(String jsonKey) {
-        return settings.get(jsonKey).toString().equalsIgnoreCase("true") || settings.get(jsonKey).toString().equalsIgnoreCase("false");
+        return settings.get(jsonKey).toString().replace("\"", "").equalsIgnoreCase("true") || settings.get(jsonKey).toString().replace("\"", "").equalsIgnoreCase("false");
     }
 
     private Boolean isSafeInteger(String jsonKey, Integer lowest, Integer highest) {

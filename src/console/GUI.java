@@ -1,9 +1,8 @@
-package console.gui;
+package console;
 
 import handler.AnomalyStats;
 import log.Logger;
 import log.Severity;
-import scheduler.Scheduler;
 
 import javax.swing.*;
 import javax.swing.text.*;

@@ -1,9 +1,8 @@
-package console.gui;
+package console;
 
-import console.Console;
-import console.gui.commands.Clear;
-import console.gui.commands.Get;
-import console.gui.commands.Stop;
+import console.commands.Clear;
+import console.commands.Get;
+import console.commands.Stop;
 
 import java.awt.*;
 

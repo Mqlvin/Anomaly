@@ -1,17 +1,12 @@
-import api.mojang.Mojang;
 import backup.Backup;
 import backup.BackupClearer;
 import console.Console;
-import console.gui.GUI;
 import handler.AnomalyStats;
 import io.Dirs;
 import io.Files;
 import log.Archiver;
 import log.LogClearer;
 import log.Logger;
-import profile.SchedulerProfile;
-import scheduler.Handler;
-import scheduler.Scheduler;
 import user.Patch;
 import user.wrapper.UserAPI;
 

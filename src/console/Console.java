@@ -1,7 +1,5 @@
 package console;
 
-import console.gui.GUI;
-
 import java.awt.*;
 
 public class Console {

@@ -1,4 +1,4 @@
-package console.gui.commands;
+package console.commands;
 
 import console.Console;
 

@@ -1,6 +1,9 @@
 import api.mojang.Mojang;
 import backup.Backup;
 import backup.BackupClearer;
+import console.Console;
+import console.gui.GUI;
+import handler.AnomalyStats;
 import io.Dirs;
 import io.Files;
 import log.Archiver;
@@ -16,6 +19,9 @@ public class Anomaly {
     public static UserAPI users = new UserAPI();
 
     public static void main(String[] args) {
+        AnomalyStats.getAnomalyStats();
+        new Console();
+
         Logger.initialiseLogs();
         Logger.addLogHeader();
         Archiver.zipLastLog();
@@ -30,10 +36,12 @@ public class Anomaly {
 
         Patch.patchAllUsers();
 
+        /*
         Handler.checkAccounts.add(new SchedulerProfile(Mojang.getUUID("Mqlvin")));
         Handler.checkAccounts.add(new SchedulerProfile(Mojang.getUUID("Veales")));
         Handler.checkAccounts.add(new SchedulerProfile(Mojang.getUUID("STiger")));
         Scheduler.startScheduler();
+         */
 
         /*
         SchedulerProfile prof = new SchedulerProfile(Mojang.getUUID("Mqlvin")); // Created the SchedulerProfile object.

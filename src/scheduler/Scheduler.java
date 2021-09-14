@@ -12,9 +12,10 @@ public class Scheduler {
             if(current >= 60) {
                 current = 0;
             }
-            current += 1;
+            current += 5;
+            System.out.println(current);
             Handler.handleChecks(current);
         };
-        executor.scheduleAtFixedRate(run, 0, 1, TimeUnit.SECONDS);
+        executor.scheduleAtFixedRate(run, 0, 5, TimeUnit.SECONDS);
     }
 }

@@ -2,7 +2,6 @@ package backup;
 
 import log.Logger;
 import log.Severity;
-import java.io.File;
 
 public class Backup {
     public static void backup() {
@@ -14,9 +13,5 @@ public class Backup {
         } catch(Exception e) {
             Logger.log(e.toString(), Severity.FATAL);
         }
-    }
-
-    public static void removeTemp() {
-        Methods.deleteDir(new File("./backup/temp"));
     }
 }

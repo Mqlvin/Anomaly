@@ -32,13 +32,4 @@ public class LanguageDB {
         obj.add("lastLanguage", new JsonParser().parse(language.toString()));
         Writers.writeFile(new File("./data/playerdata/" + uuid + "/languages.json"), obj.toString());
     }
-
-    public static Enum<Languages> toEnum(String language) {
-        for(Languages l : Languages.values()) {
-            if(l.toString().equalsIgnoreCase(language)) {
-                return l;
-            }
-        }
-        return Languages.OTHER;
-    }
 }

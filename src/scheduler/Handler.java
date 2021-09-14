@@ -1,7 +1,6 @@
 package scheduler;
 
 import checks.CheckManager;
-import checks.wrapper.Checker;
 import profile.SchedulerProfile;
 
 import java.util.ArrayList;

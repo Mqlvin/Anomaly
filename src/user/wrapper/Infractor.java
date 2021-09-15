@@ -1,12 +1,15 @@
 package user.wrapper;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import io.Reader;
 import io.Writers;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class Infractor implements InfractorWr {
     @Override
@@ -39,5 +42,15 @@ public class Infractor implements InfractorWr {
         bannedUsersObj.remove("banned");
         bannedUsersObj.add("banned", bannedUsersArr);
         Writers.writeFile(bannedUsers, bannedUsersObj.toString());
+    }
+
+    public ArrayList<String> getBannedPlayers() {
+        File bannedUsers = new File("./settings/user-settings/banned.json");
+        JsonObject bannedUsersObj = new JsonParser().parse(Reader.readJson(bannedUsers)).getAsJsonObject();
+        if(bannedUsersObj != null) {
+            JsonArray bannedUsersArr = bannedUsersObj.getAsJsonArray("banned");
+            return new Gson().fromJson(bannedUsersArr, new TypeToken<ArrayList<String>>(){}.getType());
+        }
+        return null;
     }
 }

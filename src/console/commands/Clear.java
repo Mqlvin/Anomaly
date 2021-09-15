@@ -9,7 +9,7 @@ public class Clear {
         if(command.equalsIgnoreCase("clear")) {
             Console.clear();
         } else {
-            Console.println("Invalid use of command \"clear\". Try \"clear\".", false, Color.RED);
+            Console.println("§redInvalid use of command §light_greyclear§red. Try §light_greyclear§red.", false, Color.RED);
         }
     }
 }

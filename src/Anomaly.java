@@ -1,44 +1,21 @@
+import Startup.Start;
 import api.mojang.Mojang;
-import backup.Backup;
-import backup.BackupClearer;
-import console.Console;
-import handler.AnomalyStats;
-import io.Dirs;
-import io.Files;
-import log.Archiver;
-import log.LogClearer;
-import log.Logger;
-import profile.SchedulerProfile;
-import scheduler.Handler;
-import scheduler.Scheduler;
-import user.Patch;
+import scheduler.Initialiser;
+import user.wrapper.Infractor;
 import user.wrapper.UserAPI;
 
 public class Anomaly {
     public static UserAPI users = new UserAPI();
 
     public static void main(String[] args) {
-        AnomalyStats.getAnomalyStats();
-        new Console();
+        Start.start();
 
-        Logger.initialiseLogs();
-        Logger.addLogHeader();
-        Archiver.zipLastLog();
+        Infractor infractor = new Infractor();
+        infractor.banUser(Mojang.getUUID("ToggleOnU"));
+        infractor.banUser(Mojang.getUUID("STiger"));
+        infractor.banUser(Mojang.getUUID("Veales"));
 
-        Dirs.startupDirs();
-        Files.startupFiles();
-        Logger.dumpAll();
-        Backup.backup();
-
-        LogClearer.removeOldLogs();
-        BackupClearer.removeOldBackups();
-
-        Patch.patchAllUsers();
-
-        Handler.checkAccounts.add(new SchedulerProfile(Mojang.getUUID("Mqlvin")));
-        Handler.checkAccounts.add(new SchedulerProfile(Mojang.getUUID("Veales")));
-        Handler.checkAccounts.add(new SchedulerProfile(Mojang.getUUID("STiger")));
-        Scheduler.startScheduler();
+        // Initialiser.initialisePlayers();
 
         /*
         SchedulerProfile prof = new SchedulerProfile(Mojang.getUUID("Mqlvin")); // Created the SchedulerProfile object.

@@ -12,6 +12,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 
 public class GUI {
     public static JFrame frame;
@@ -156,7 +159,50 @@ public class GUI {
     }
 
     public void println(String line, Boolean trace, Color color) {
-        doLine(" " + line + "\n", trace, color);
+        if(line.contains("§")) {
+            String[] strings = line.split("§");
+            doLine(" ", false, Color.BLACK);
+            for(String oneLine : strings) {
+                if(oneLine.startsWith("red")) {
+                    doLine(oneLine.substring(3), false, new Color(248, 60, 60));
+                } else if(oneLine.toLowerCase().startsWith("dark_red")) {
+                    doLine(oneLine.substring(8), false, new Color(159, 0, 0));
+                } else if(oneLine.toLowerCase().startsWith("orange")) {
+                    doLine(oneLine.substring(6), false, new Color(243, 120, 23));
+                } else if(oneLine.toLowerCase().startsWith("yellow")) {
+                    doLine(oneLine.substring(6), false, new Color(248, 244, 16));
+                } else if(oneLine.toLowerCase().startsWith("green")) {
+                    doLine(oneLine.substring(5), false, new Color(44, 208, 15));
+                } else if(oneLine.toLowerCase().startsWith("dark_green")) {
+                    doLine(oneLine.substring(10), false, new Color(10, 133, 6));
+                } else if(oneLine.toLowerCase().startsWith("cyan")) {
+                    doLine(oneLine.substring(4), false, new Color(30, 138, 160));
+                } else if(oneLine.toLowerCase().startsWith("aqua")) {
+                    doLine(oneLine.substring(4), false, new Color(24, 227, 203));
+                } else if(oneLine.toLowerCase().startsWith("blue")) {
+                    doLine(oneLine.substring(4), false, new Color(15, 98, 236));
+                } else if(oneLine.toLowerCase().startsWith("dark_blue")) {
+                    doLine(oneLine.substring(9), false, new Color(0, 42, 255));
+                } else if(oneLine.toLowerCase().startsWith("pink")) {
+                    doLine(oneLine.substring(4), false, new Color(218, 24, 234));
+                } else if(oneLine.toLowerCase().startsWith("purple")) {
+                    doLine(oneLine.substring(6), false, new Color(116, 25, 219));
+                } else if(oneLine.toLowerCase().startsWith("dark_purple")) {
+                    doLine(oneLine.substring(11), false, new Color(87, 0, 153));
+                } else if(oneLine.toLowerCase().startsWith("black")) {
+                    doLine(oneLine.substring(5), false, new Color(0, 0, 0));
+                } else if(oneLine.toLowerCase().startsWith("white")) {
+                    doLine(oneLine.substring(5), false, new Color(255, 255, 255));
+                } else if(oneLine.toLowerCase().startsWith("dark_grey")) {
+                    doLine(oneLine.substring(9), false, new Color(60, 60, 60));
+                } else if(oneLine.toLowerCase().startsWith("light_grey")) {
+                    doLine(oneLine.substring(10), false, new Color(165, 165, 165));
+                }
+            }
+            doLine("\n", trace, new Color(0, 0, 0));
+        } else {
+            doLine(" " + line + "\n", trace, color);
+        }
     }
 
     public void clear() {
@@ -168,11 +214,24 @@ public class GUI {
     }
 
     public void stop() {
-        println("Anomaly stopped. Press any key to continue...", false, Color.LIGHT_GRAY);
+        println("§redAnomaly stopped. §light_greyPress any key to continue...", false, Color.LIGHT_GRAY);
         sysEx = true;
+        Console.ended = true;
     }
 
     public void sysExit() {
         System.exit(-1);
+    }
+
+    public void delLast() {
+        try {
+            String content = console.getDocument().getText(0, document.getLength());
+            List<String> contentParsed = Arrays.asList(content.split("\n"));
+            String rebuild = contentParsed.get(contentParsed.size() - 1);
+            document.remove(content.length() - rebuild.length() - 2, rebuild.length() + 2);
+            Console.println(" ", false, Color.WHITE);
+        } catch(BadLocationException e) {
+            Logger.log(e.toString(), Severity.FATAL);
+        }
     }
 }

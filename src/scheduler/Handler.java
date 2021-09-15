@@ -20,15 +20,23 @@ public class Handler {
                 continue;
             } else if(!prof.shouldSendEmail() && !prof.shouldSendDiscordMessage()) { // TODO: Always update this value based on the new way to send warnings.
                 continue;
+            } else if(prof.getKey().equalsIgnoreCase("%apiKey%")) {
+                continue;
             }
             Double tempDivide = Double.parseDouble(i.toString()) / Double.parseDouble(prof.interval().toString());
             if(floor(tempDivide) == tempDivide) {
-                CheckManager.runChecks(prof);
+                new Thread(() -> {
+                    CheckManager.runChecks(prof);
+                }).start();
                 System.out.println("Checking: " + prof.getUsername());
             }
             /*
             Quick FYI on how this part works:
             if temdDiv rounded == tempDivide then we run the script. This means it runs on the interval the user selects.
+
+            Really this is running:
+            if currentInt / your interval
+            currentInt updates by 5 every 5 seconds.
              */
         }
     }

@@ -1,9 +1,6 @@
 package console;
 
-import console.commands.Clear;
-import console.commands.Get;
-import console.commands.Help;
-import console.commands.Stop;
+import console.commands.*;
 
 import java.awt.*;
 
@@ -21,12 +18,15 @@ public class CommandHandler {
         } else if(command.toLowerCase().startsWith("help")) {
             Help.help(command);
             // End of "help" command.
+        } else if(command.toLowerCase().startsWith("ban")) {
+            Ban.ban(command);
+            // End of "ban" command.
         }
 
 
 
         else {
-            Console.println("Unknown command. Try \"help\" for a list of commands.", false, Color.RED);
+            Console.println("§redUnknown command. Try §light_greyhelp§red for a list of commands.", false, Color.RED);
         }
     }
 }

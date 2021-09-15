@@ -9,7 +9,7 @@ public class Stop {
         if(command.equalsIgnoreCase("stop")) {
             Console.stop();
         } else {
-            Console.println("Invalid use of command \"stop\". Try \"stop\".", false, Color.RED);
+            Console.println("§redInvalid use of command §light_greystop§red. Try §light_greystop§red.", false, Color.RED);
         }
     }
 }

@@ -5,7 +5,7 @@ import console.Console;
 import java.awt.*;
 
 public class Stop {
-    public static void consoleStop(String command) {
+    public static void stop(String command) {
         if(command.equalsIgnoreCase("stop")) {
             Console.stop();
         } else {

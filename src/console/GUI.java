@@ -66,26 +66,25 @@ public class GUI {
 
         frame.setVisible(true);
 
-        input.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String inputText = input.getText();
-                if(inputText.length() > 1) {
-                    println("> " + inputText, false, Color.LIGHT_GRAY);
-                    new CommandHandler().runCommand(inputText);
-                    scrollBottom();
-                    input.setText("");
-                    /*
-                    if(recentCommands.size() != 1 || recentCommands.size() != 0) {
-                        System.out.println(recentCommands.size());
-                        if(recentCommands.get(recentCommands.size() - 1) != inputText) {
-                            recentCommands.add(inputText);
-                        }
+        input.addActionListener(e -> {
+            String inputText = input.getText();
+            if(inputText.length() > 1) {
+                println("> " + inputText, false, Color.LIGHT_GRAY);
+                new CommandHandler().runCommand(inputText);
+                println(" ", false, Color.BLACK);
+                scrollBottom();
+                /*
+                Integer currentSize = recentCommands.size();
+                if(currentSize != 1 || currentSize != 0) {
+                    System.out.println(recentCommands.size());
+                    if(recentCommands.get(recentCommands.size() - 1) != inputText) {
+                        recentCommands.add(inputText);
                     }
-                    currentCommand = "";
-                    recentId = 0;
-                     */
                 }
+                 */
+                input.setText("");
+                currentCommand = "";
+                recentId = 0;
             }
         });
 

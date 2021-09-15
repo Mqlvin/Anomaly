@@ -6,7 +6,7 @@ import console.Console;
 import java.awt.*;
 
 public class Get {
-    public static void consoleGet(String command) {
+    public static void get(String command) {
         if(command.toLowerCase().startsWith("get uuid")) {
             if(command.split(" ").length == 3) {
                 String uuid = Mojang.getUUID(command.split(" ")[2]);

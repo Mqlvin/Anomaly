@@ -5,7 +5,7 @@ import console.Console;
 import java.awt.*;
 
 public class Clear {
-    public static void consoleClear(String command) {
+    public static void clear(String command) {
         if(command.equalsIgnoreCase("clear")) {
             Console.clear();
         } else {

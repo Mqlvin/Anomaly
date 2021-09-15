@@ -1,6 +1,5 @@
-import Startup.Start;
+import startup.Start;
 import api.mojang.Mojang;
-import scheduler.Initialiser;
 import user.wrapper.Infractor;
 import user.wrapper.UserAPI;
 

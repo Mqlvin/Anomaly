@@ -1,4 +1,4 @@
-package Startup;
+package startup;
 
 import backup.Backup;
 import backup.BackupClearer;

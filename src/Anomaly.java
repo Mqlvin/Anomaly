@@ -1,3 +1,4 @@
+import api.mojang.Mojang;
 import backup.Backup;
 import backup.BackupClearer;
 import console.Console;
@@ -7,6 +8,9 @@ import io.Files;
 import log.Archiver;
 import log.LogClearer;
 import log.Logger;
+import profile.SchedulerProfile;
+import scheduler.Handler;
+import scheduler.Scheduler;
 import user.Patch;
 import user.wrapper.UserAPI;
 
@@ -31,12 +35,10 @@ public class Anomaly {
 
         Patch.patchAllUsers();
 
-        /*
         Handler.checkAccounts.add(new SchedulerProfile(Mojang.getUUID("Mqlvin")));
         Handler.checkAccounts.add(new SchedulerProfile(Mojang.getUUID("Veales")));
         Handler.checkAccounts.add(new SchedulerProfile(Mojang.getUUID("STiger")));
         Scheduler.startScheduler();
-         */
 
         /*
         SchedulerProfile prof = new SchedulerProfile(Mojang.getUUID("Mqlvin")); // Created the SchedulerProfile object.

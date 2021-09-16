@@ -72,9 +72,23 @@ public class Ban {
                 }
 
                 if(command.split(" ")[1].equalsIgnoreCase("uuid")) {
-
-                } else {
-                    Console.println("§redInvalid use of command §light_greyban uuid§red. Try §light_greyban uuid (uuid)§red.", false, Color.RED);
+                    if(command.split(" ").length != 3) {
+                        Console.println("§redInvalid use of command §light_greyban user§red. Try §light_greyban user (username)§red.", false, Color.RED);
+                        return;
+                    }
+                    ArrayList<String> bannedUsers = infractor.getBannedPlayers();
+                    if(bannedUsers != null) {
+                        if(!bannedUsers.contains(command.split(" ")[2])) {
+                            infractor.banUser(command.split(" ")[2]);
+                            Console.println("§whiteSuccessfully banned the player §purple" + command.split(" ")[2], false, Color.RED);
+                        } else {
+                            Console.println("§redThe player §purple" + command.split(" ")[2] + " §redis already banned", false, Color.RED);
+                        }
+                        return;
+                    } else {
+                        infractor.banUser(command.split(" ")[2]);
+                        return;
+                    }
                 }
             } else {
                 Console.println("§redInvalid use of command §light_greyban§red. Try §light_greyban user (username)§red.", false, Color.RED);

@@ -8,12 +8,6 @@ public class Anomaly {
 
     public static void main(String[] args) {
         Start.start();
-
-        Infractor infractor = new Infractor();
-        infractor.banUser(Mojang.getUUID("ToggleOnU"));
-        infractor.banUser(Mojang.getUUID("STiger"));
-        infractor.banUser(Mojang.getUUID("Veales"));
-
         // Initialiser.initialisePlayers();
 
         /*

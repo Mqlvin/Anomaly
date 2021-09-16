@@ -21,7 +21,11 @@ public class CommandHandler {
         } else if(command.toLowerCase().startsWith("ban")) {
             Ban.ban(command);
             // End of "ban" command.
+        } else if(command.toLowerCase().startsWith("unban")) {
+            Unban.unban(command);
+            // End of "ban" command.
         }
+
 
 
 

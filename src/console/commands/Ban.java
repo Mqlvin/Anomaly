@@ -19,11 +19,11 @@ public class Ban {
         if(command.toLowerCase().startsWith("ban")) {
             if(command.split(" ").length == 2 || command.split(" ").length == 3) {
                 if(command.split(" ")[1].equalsIgnoreCase("list")) {
-                    if (command.split(" ").length == 2) {
+                    if(command.split(" ").length == 2) {
                         Console.println("§redInvalid use of command §light_greyban§red. Try §light_greyban list (usernames/uuids)§red.", false, Color.RED);
                         return;
                     }
-                    if (command.split(" ")[2].equalsIgnoreCase("uuid") || command.split(" ")[2].equalsIgnoreCase("uuids")) {
+                    if(command.split(" ")[2].equalsIgnoreCase("uuid") || command.split(" ")[2].equalsIgnoreCase("uuids")) {
                         ArrayList<String> banned = infractor.getBannedPlayers();
                         StringBuilder list = new StringBuilder();
                         if (banned != null) {

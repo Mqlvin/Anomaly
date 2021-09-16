@@ -224,12 +224,12 @@ public class GUI {
     }
 
     public void delLast() {
+        // TODO: Fix this it clearly doesn't work.
         try {
             String content = console.getDocument().getText(0, document.getLength());
             List<String> contentParsed = Arrays.asList(content.split("\n"));
             String rebuild = contentParsed.get(contentParsed.size() - 1);
             document.remove(content.length() - rebuild.length() - 2, rebuild.length() + 2);
-            Console.println(" ", false, Color.WHITE);
         } catch(BadLocationException e) {
             Logger.log(e.toString(), Severity.FATAL);
         }

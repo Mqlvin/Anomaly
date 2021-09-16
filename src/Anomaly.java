@@ -1,6 +1,5 @@
+import scheduler.Initialiser;
 import startup.Start;
-import api.mojang.Mojang;
-import user.wrapper.Infractor;
 import user.wrapper.UserAPI;
 
 public class Anomaly {
@@ -8,7 +7,7 @@ public class Anomaly {
 
     public static void main(String[] args) {
         Start.start();
-        // Initialiser.initialisePlayers();
+        Initialiser.initialisePlayers();
 
         /*
         SchedulerProfile prof = new SchedulerProfile(Mojang.getUUID("Mqlvin")); // Created the SchedulerProfile object.

@@ -82,7 +82,7 @@ public class Logger {
             if(file.exists()) {
             } else {
                 file.createNewFile();
-                Writers.writeFile(file, requestJson("https://mqlvin.github.io/api/settings"));
+                Writers.writeFile(file, requestJson("https://anomaly.npkn.net/api/settings"));
             }
         } catch(IOException e) {
             Logger.log(e.toString(), Severity.FATAL);

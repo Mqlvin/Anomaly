@@ -39,6 +39,7 @@ public class GUI {
         frame = new JFrame();
         frame.setTitle("Anomaly " + AnomalyStats.version);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setUndecorated(true);
 
         console = new JTextPane();
         console.setEditable(false);
@@ -76,16 +77,15 @@ public class GUI {
                 new CommandHandler().runCommand(inputText);
                 println(" ", false, Color.BLACK);
                 scrollBottom();
-                /*
-                Integer currentSize = recentCommands.size();
-                if(currentSize != 1 || currentSize != 0) {
-                    System.out.println(recentCommands.size());
-                    if(recentCommands.get(recentCommands.size() - 1) != inputText) {
+                if(recentCommands.size() != 0) {
+                    if (!recentCommands.get(recentCommands.size() - 1).equalsIgnoreCase(inputText)) {
                         recentCommands.add(inputText);
                     }
+                } else {
+                    recentCommands.add(inputText);
                 }
-                 */
                 input.setText("");
+                input.requestFocus();
                 currentCommand = "";
                 recentId = 0;
             }
@@ -94,7 +94,7 @@ public class GUI {
         input.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
-
+                currentCommand = input.getText();
             }
 
             @Override
@@ -104,16 +104,24 @@ public class GUI {
                 }
 
                 if(e.getKeyCode() == KeyEvent.VK_UP) {
-                    if(recentId < (recentCommands.size() - 1)) {
+                    System.out.println(recentCommands.size() + " is size, recentId " + recentId + " and currentCommand " + currentCommand);
+                    if(recentId + 1 >= recentCommands.size()) {
+                    } else if(recentCommands.size() >= recentId - 1) {
                         recentId += 1;
-                        input.setText(recentCommands.get(recentId));
+                        System.out.println(recentCommands.size() + " is size, recentId " + recentId + " and currentCommand " + currentCommand);
+                        input.setText(recentCommands.get(recentCommands.size() - recentId));
                     }
                 } else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    if(recentId > 0) {
+                    System.out.println("key down");
+                    if(recentId != 0 && recentId != 1) {
+                    } else if(recentCommands.size() >= recentId + 1) {
                         recentId -= 1;
-                        input.setText(recentCommands.get(recentId));
-                    } else {
-                        input.setText(currentCommand);
+                        System.out.println(recentCommands.size() + " is size, recentId " + recentId + " and currentCommand " + currentCommand);
+                        if(recentId == 0) {
+                            input.setText(currentCommand);
+                        } else {
+                            input.setText(recentCommands.get(recentId - 1));
+                        }
                     }
                 }
             }

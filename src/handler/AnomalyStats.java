@@ -13,7 +13,7 @@ public class AnomalyStats {
     public static String version;
     public static ArrayList<String> authors;
     public static void getAnomalyStats() {
-        JsonObject obj = new JsonParser().parse(HTTPClient.requestJson("https://mqlvin.github.io/api/anomaly-stats")).getAsJsonObject();
+        JsonObject obj = new JsonParser().parse(HTTPClient.requestJson("https://anomaly.npkn.net/api/anomaly-stats")).getAsJsonObject();
         version = obj.get("version").toString().replace("\"", "");
         Type arrayType = new TypeToken<ArrayList<String>>(){}.getType();
         authors = new Gson().fromJson(obj.get("authors"), arrayType);

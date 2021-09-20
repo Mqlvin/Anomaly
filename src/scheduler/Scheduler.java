@@ -17,6 +17,10 @@ public class Scheduler {
                 }
                 current += 5;
                 Handler.handleChecks(current);
+                Handler.enabled = true;
+                if(Handler.shouldDisable) {
+                    executor.shutdown();
+                }
             }
         };
         executor.scheduleAtFixedRate(run, 0, 5, TimeUnit.SECONDS);

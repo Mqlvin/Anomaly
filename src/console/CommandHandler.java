@@ -23,7 +23,10 @@ public class CommandHandler {
             // End of "ban" command.
         } else if(command.toLowerCase().startsWith("unban")) {
             Unban.unban(command);
-            // End of "ban" command.
+            // End of "unban" command.
+        } else if(command.toLowerCase().startsWith("scheduler")) {
+            Scheduler.schedule(command);
+            // End of "scheduler" command.
         }
 
 

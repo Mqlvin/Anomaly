@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import io.Reader;
 import log.Severity;
 import playerlog.PlayerLog;
+import user.Users;
 import user.wrapper.UserAPI;
 
 import java.io.File;
@@ -32,6 +33,8 @@ public class SchedulerProfile implements CheckProfileInterface {
     private Boolean doLanguageChecks;
     private Double languageSensitivity;
 
+    private Boolean attemptedReload = false;
+
     public SchedulerProfile(String uuid_) {
         settingsPath = new File("./settings/user-settings/" + users.getUserID(uuid_) + "/" + uuid_ + "/settings.json");
         uuid = uuid_;
@@ -41,11 +44,19 @@ public class SchedulerProfile implements CheckProfileInterface {
     @Override
     public void reloadSettings() {
         if(!settingsPath.exists()) {
-            // Could add some proper handling here, add a new user at least and set something up before closing.
-            // Also note if we do get to this stage, something has gone seriously wrong, as I should send a warning to myself to investigate this!
-            PlayerLog.log("The user settings for " + uuid + " (" + Mojang.getUsername(uuid) + ") could not be located.", uuid, Severity.FATAL);
+            if(attemptedReload) {
+                PlayerLog.log("The user settings for " + uuid + " (" + Mojang.getUsername(uuid) + ") could not be located.", uuid, Severity.FATAL);
+                return;
+            }
+            UserAPI users = new UserAPI();
+            if(users.getUserID(uuid) != null) {
+                Users.createUser(uuid, Integer.parseInt(users.getUserID(uuid)));
+            } else {
+                Users.createUser(uuid, -1);
+            }
             enabled = false;
-            return;
+            attemptedReload = true;
+            reloadSettings();
         }
         JsonObject settingsTemp = new JsonParser().parse(Reader.readJson(new File("./settings/user-settings/" + users.getUserID(uuid) + "/" + uuid + "/settings.json"))).getAsJsonObject();
         if(settingsTemp == null) {

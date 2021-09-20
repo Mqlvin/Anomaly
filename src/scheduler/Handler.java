@@ -10,6 +10,9 @@ import static java.lang.Math.floor;
 public class Handler {
     public static ArrayList<SchedulerProfile> checkAccounts = new ArrayList<>();
 
+    public static Boolean enabled = false;
+    public static Boolean shouldDisable = false;
+
     public static void handleChecks(Integer i) {
         for(SchedulerProfile prof : checkAccounts) {
             if(5 > prof.interval() && 300 < prof.interval()) {

@@ -1,5 +1,6 @@
 package io;
 
+import com.google.gson.JsonParser;
 import http.HTTPClient;
 import log.Logger;
 import log.Severity;
@@ -49,7 +50,8 @@ public class Files {
             Writers.writeFile(bannedUsers, "{}");
         }
 
-        Writers.writeFile(new File("./data/%mail-template.html"), HTTPClient.requestString("https://mqlvin.github.io/api/mail-template.txt"));
-        Writers.writeFile(new File("./settings/%default-settings.json"), HTTPClient.requestJson("https://mqlvin.github.io/api/default-settings"));
+        String response = new JsonParser().parse(HTTPClient.requestString("https://anomaly.npkn.net/api/mail")).getAsJsonObject().get("template").toString();
+        Writers.writeFile(new File("./data/%mail-template.html"), response.substring(1, response.length() - 1));
+        Writers.writeFile(new File("./settings/%default-settings.json"), HTTPClient.requestJson("https://anomaly.npkn.net/api/player-settings"));
     }
 }

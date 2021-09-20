@@ -1,14 +1,11 @@
 import scheduler.Initialiser;
 import startup.Start;
-import user.wrapper.UserAPI;
 
 public class Anomaly {
-    public static UserAPI users = new UserAPI();
 
     public static void main(String[] args) {
         Start.start();
         Initialiser.initialisePlayers();
-
         /*
         SchedulerProfile prof = new SchedulerProfile(Mojang.getUUID("Mqlvin")); // Created the SchedulerProfile object.
         users.setInterval(prof.getUUID(), "10");

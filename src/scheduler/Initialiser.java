@@ -40,5 +40,7 @@ public class Initialiser {
         }
         Console.println(" §white$ §light_greyInitialising §green" + amountRegistered + " §light_greyplayers, with §red" + amountBanned + " §light_greybanned.", false, Color.WHITE);
         Scheduler.startScheduler();
+        Handler.enabled = true;
+        Handler.shouldDisable = false;
     }
 }

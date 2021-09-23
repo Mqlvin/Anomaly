@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="mail-1.4.7">
+  <library name="gson-2.8.21">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/src/com/anomaly/libs/mail-1.4.7.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/com/anomaly/libs/gson-2.8.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

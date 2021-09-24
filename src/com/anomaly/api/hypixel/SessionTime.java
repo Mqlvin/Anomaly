@@ -1,5 +1,6 @@
 package com.anomaly.api.hypixel;
 
+import com.anomaly.security.KeyManager;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.anomaly.log.Logger;
@@ -13,7 +14,11 @@ import static com.anomaly.http.HTTPClient.requestJson;
 
 public class SessionTime {
     public static String get(String uuid, String key) {
+        if(!KeyManager.key(uuid).shouldRequest()) {
+            return null;
+        }
         String response = requestJson("https://api.hypixel.net/player?key=" + key + "&uuid=" + uuid);
+        KeyManager.key(uuid).addRequest();
         JsonObject obj = new JsonParser().parse(response).getAsJsonObject();
         long lastLogin = Long.parseLong(obj.getAsJsonObject("player").get("lastLogin").toString().replace("\"", "").replace("\"", ""));
         long lastLogout = Long.parseLong(obj.getAsJsonObject("player").get("lastLogout").toString().replace("\"", "").replace("\"", ""));

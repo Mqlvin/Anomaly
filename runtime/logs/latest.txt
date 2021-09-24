@@ -1,14 +1,23 @@
-[21:18:13] [/WARN] .\runtime directory was unsuccessfully created. Maybe it already exists?
-[21:18:13] [/WARN] .\runtime\user-settings directory was unsuccessfully created. Maybe it already exists?
-[21:18:13] [/WARN] .\runtime\settings directory was unsuccessfully created. Maybe it already exists?
-[21:18:13] [/WARN] .\runtime\logs directory was unsuccessfully created. Maybe it already exists?
-[21:18:13] [/WARN] .\backup directory was unsuccessfully created. Maybe it already exists?
-[21:18:13] [/WARN] .\settings directory was unsuccessfully created. Maybe it already exists?
-[21:18:13] [/WARN] .\settings\user-settings directory was unsuccessfully created. Maybe it already exists?
-[21:18:13] [/WARN] .\data directory was unsuccessfully created. Maybe it already exists?
-[21:18:13] [/WARN] .\data\cache directory was unsuccessfully created. Maybe it already exists?
-[21:18:13] [/WARN] .\data\playerdata directory was unsuccessfully created. Maybe it already exists?
-[21:18:13] [/WARN] .\data\response directory was unsuccessfully created. Maybe it already exists?
-23/09/2021 - 21:18 - Anomaly runtime log.
-[21:18:13] [/FATAL] java.io.FileNotFoundException: .\runtime\logs\[21:18:13] [∕WARN] .\runtime directory was unsuccessfully created. Maybe it already exists?-1.zip (The filename, directory name, or volume label syntax is incorrect).
-[21:18:14] [/INFO] Backup successfully created!
+[20:50:06] [/WARN] .\runtime directory was unsuccessfully created. Maybe it already exists?
+[20:50:06] [/WARN] .\runtime\user-settings directory was unsuccessfully created. Maybe it already exists?
+[20:50:06] [/WARN] .\runtime\settings directory was unsuccessfully created. Maybe it already exists?
+[20:50:06] [/WARN] .\runtime\logs directory was unsuccessfully created. Maybe it already exists?
+[20:50:06] [/WARN] .\backup directory was unsuccessfully created. Maybe it already exists?
+[20:50:06] [/WARN] .\settings directory was unsuccessfully created. Maybe it already exists?
+[20:50:06] [/WARN] .\settings\user-settings directory was unsuccessfully created. Maybe it already exists?
+[20:50:06] [/WARN] .\data directory was unsuccessfully created. Maybe it already exists?
+[20:50:06] [/WARN] .\data\cache directory was unsuccessfully created. Maybe it already exists?
+[20:50:06] [/WARN] .\data\playerdata directory was unsuccessfully created. Maybe it already exists?
+[20:50:06] [/WARN] .\data\response directory was unsuccessfully created. Maybe it already exists?
+24/09/2021 - 20:50 - Anomaly runtime log.
+[20:50:06] [/FATAL] java.io.FileNotFoundException: .\runtime\logs\[20:50:06] [∕WARN] .\runtime directory was unsuccessfully created. Maybe it already exists?-1.zip (The filename, directory name, or volume label syntax is incorrect).
+[20:50:07] [/INFO] Backup successfully created!
+[20:50:49] [/FATAL] javax.mail.MessagingException: Could not connect to SMTP host: localhost, port: 25;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect.
+[20:50:54] [/FATAL] javax.mail.MessagingException: Could not connect to SMTP host: localhost, port: 25;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect.
+[20:50:59] [/FATAL] javax.mail.MessagingException: Could not connect to SMTP host: localhost, port: 25;
+  nested exception is:
+	java.net.ConnectException: Connection refused: connect.

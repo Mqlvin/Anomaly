@@ -16,5 +16,6 @@ public class CheckManager {
                 Warn.sendWarning(prof);
             }
         }
+        // TODO: Great place to do this, essentially only make one API request and past the database the response, then get the language from that.
     }
 }

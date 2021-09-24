@@ -1,6 +1,7 @@
 package com.anomaly.profile;
 
 import com.anomaly.api.mojang.Mojang;
+import com.anomaly.security.KeyManager;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.anomaly.io.Reader;
@@ -39,6 +40,7 @@ public class SchedulerProfile implements CheckProfileInterface {
         settingsPath = new File("./settings/user-settings/" + users.getUserID(uuid_) + "/" + uuid_ + "/settings.json");
         uuid = uuid_;
         reloadSettings();
+        KeyManager.initialiseKey(uuid, key);
     }
 
     @Override

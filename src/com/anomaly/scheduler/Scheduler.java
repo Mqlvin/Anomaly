@@ -16,7 +16,7 @@ public class Scheduler {
                     current = 0;
                 }
                 current += 5;
-                Handler.handleChecks(current);
+                CheckHandler.handleChecks(current);
                 Handler.enabled = true;
                 if(Handler.shouldDisable) {
                     executor.shutdown();

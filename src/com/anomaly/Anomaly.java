@@ -1,10 +1,14 @@
 package com.anomaly;
 
+import com.anomaly.api.hypixel.Language;
+import com.anomaly.api.mojang.Mojang;
 import com.anomaly.date.Unix;
 import com.anomaly.scheduler.Initialiser;
+import com.anomaly.security.HypixelKey;
 import com.anomaly.security.KeyManager;
 import com.anomaly.startup.Start;
 
+import java.security.Key;
 import java.text.SimpleDateFormat;
 
 public class Anomaly {
@@ -12,10 +16,22 @@ public class Anomaly {
     public static void main(String[] args) {
         Start.start();
         KeyManager.startManager();
-        // Initialiser.initialisePlayers();
+        Initialiser.initialisePlayers();
 
         // SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         // System.out.println(sdf.format(Unix.toDate(new Long(1632167960))));
+
+        /*
+        KeyManager.initialiseKey(Mojang.getUUID("Mqlvin"),"d8e7f0b1-6dcf-4a96-993c-8f11cf2fe15b");
+        KeyManager.initialiseKey(Mojang.getUUID("Veales"),"d8e7f0b1-6dcf-4a96-993c-8f11cf2fe15b");
+        System.out.println(Language.get(Mojang.getUUID("Mqlvin"), KeyManager.key(Mojang.getUUID("Mqlvin")).getKey()));
+        for(int i = 0; i < 65; i++) {
+            KeyManager.key(Mojang.getUUID("Veales")).addRequest();
+            // System.out.println(KeyManager.key(Mojang.getUUID("Veales")).getRequests() + " " + KeyManager.key(Mojang.getUUID("Veales")).shouldRequest());
+        }
+        System.out.println(Language.get(Mojang.getUUID("Veales"), KeyManager.key(Mojang.getUUID("Mqlvin")).getKey()));
+         */
+
         /*
         SchedulerProfile prof = new SchedulerProfile(Mojang.getUUID("Mqlvin")); // Created the SchedulerProfile object.
         users.setInterval(prof.getUUID(), "10");

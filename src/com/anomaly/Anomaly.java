@@ -1,15 +1,8 @@
 package com.anomaly;
 
-import com.anomaly.api.hypixel.Language;
-import com.anomaly.api.mojang.Mojang;
-import com.anomaly.date.Unix;
 import com.anomaly.scheduler.Initialiser;
-import com.anomaly.security.HypixelKey;
 import com.anomaly.security.KeyManager;
 import com.anomaly.startup.Start;
-
-import java.security.Key;
-import java.text.SimpleDateFormat;
 
 public class Anomaly {
 
@@ -17,6 +10,15 @@ public class Anomaly {
         Start.start();
         KeyManager.startManager();
         Initialiser.initialisePlayers();
+
+        /*
+        SchedulerProfile prof = new SchedulerProfile(Mojang.getUUID("Mqlvin"));
+        KeyManager.initialiseKey(Mojang.getUUID("Mqlvin"), "d8e7f0b1-6dcf-4a96-993c-8f11cf2fe15b");
+        Requester response = new Requester(Mojang.getUUID("Mqlvin"), RequestType.STATS);
+        System.out.println(Language.get(response.data()));
+        System.out.println(Version.get(response.data()));
+        System.out.println(KeyManager.key(Mojang.getUUID("Mqlvin")).getRequests());
+         */
 
         // SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         // System.out.println(sdf.format(Unix.toDate(new Long(1632167960))));

@@ -2,7 +2,7 @@ package com.anomaly.security;
 
 import java.util.ArrayList;
 
-public class HypixelKey implements HypixelKeyWr {
+public class HypixelKey implements HypixelKeyInterface {
     private volatile ArrayList<String> uuid = new ArrayList<>();
     private volatile Integer requests = 0; // Requests this minute.
     private volatile String key = "";

@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Checker implements ChecksWr {
+public class Checker implements ChecksInterface {
     @Override
     public Boolean checkLanguage(String uuid, Double sensitivity) {
         JsonObject languageData = new JsonParser().parse(Reader.readJson(new File("./data/playerdata/" + uuid + "/languages.json"))).getAsJsonObject();

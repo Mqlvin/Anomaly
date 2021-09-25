@@ -1,6 +1,6 @@
 package com.anomaly.user.wrapper;
 
-public interface InfractorWr {
+public interface InfractorInterface {
     public void banUser(String uuid);
     public void unbanUser(String uuid);
 }

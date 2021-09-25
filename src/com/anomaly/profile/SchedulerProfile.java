@@ -37,10 +37,14 @@ public class SchedulerProfile implements CheckProfileInterface {
     private Boolean attemptedReload = false;
 
     public SchedulerProfile(String uuid_) {
+        if(ProfileManager.isCreated(uuid_)) {
+            return;
+        }
         settingsPath = new File("./settings/user-settings/" + users.getUserID(uuid_) + "/" + uuid_ + "/settings.json");
         uuid = uuid_;
         reloadSettings();
         KeyManager.initialiseKey(uuid, key);
+        ProfileManager.profiles.add(this);
     }
 
     @Override

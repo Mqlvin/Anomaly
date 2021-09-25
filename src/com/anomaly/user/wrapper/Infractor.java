@@ -11,7 +11,7 @@ import com.anomaly.io.Writers;
 import java.io.File;
 import java.util.ArrayList;
 
-public class Infractor implements InfractorWr {
+public class Infractor implements InfractorInterface {
     @Override
     public void banUser(String uuid) {
         File bannedUsers = new File("./settings/user-settings/banned.json");

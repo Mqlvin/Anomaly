@@ -2,7 +2,7 @@ package com.anomaly.security;
 
 import java.util.ArrayList;
 
-public interface HypixelKeyWr {
+public interface HypixelKeyInterface {
     public Integer getRequests();
     public ArrayList<String> getUUIDs();
     public String getKey();

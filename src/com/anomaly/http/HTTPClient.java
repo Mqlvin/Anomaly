@@ -19,7 +19,7 @@ public class HTTPClient {
             result = sb.toString().replaceAll("<[^>]*>", "");
         } catch(Exception e) {
             Logger.log(e.toString(), Severity.FATAL);
-            return "Malformed URL.";
+            return null;
         }
         return result;
     }
@@ -36,7 +36,7 @@ public class HTTPClient {
             result = sb.toString();
         } catch(Exception e) {
             Logger.log(e.toString(), Severity.FATAL);
-            return "Malformed URL.";
+            return null;
         }
         return result;
     }

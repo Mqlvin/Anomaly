@@ -1,12 +1,31 @@
 package com.anomaly.scheduler;
 
 import com.anomaly.checks.CheckManager;
+import com.anomaly.console.CommandHandler;
+import com.anomaly.console.Console;
 import com.anomaly.profile.SchedulerProfile;
+
+import java.awt.*;
 
 import static java.lang.Math.floor;
 
 public class CheckHandler {
     public static void handleChecks(Integer i) {
+        if(CommandHandler.showCheckMessages) {
+            if(Handler.checkAccounts.size() > 4) {
+                Console.println("§light_greyChecking §white" + Handler.checkAccounts.get(0).getUsername() + "§light_grey, §white" + Handler.checkAccounts.get(1).getUsername() + "§light_grey and §white" + Handler.checkAccounts.get(2).getUsername() + "§light_grey and §white" + (Handler.checkAccounts.size() - 3) + " §light_greyothers.", false, Color.WHITE);
+            } else if(Handler.checkAccounts.size() == 3) {
+                Console.println("§light_greyChecking §white" + Handler.checkAccounts.get(0).getUsername() + "§light_grey, §white" + Handler.checkAccounts.get(1).getUsername() + "§light_grey and §white" + Handler.checkAccounts.get(2).getUsername() + "§light_grey.", false, Color.WHITE);
+            } else if(Handler.checkAccounts.size() == 2) {
+                Console.println("§light_greyChecking §white" + Handler.checkAccounts.get(0).getUsername() + "§light_grey and §white" + Handler.checkAccounts.get(1).getUsername() + "§light_grey.", false, Color.WHITE);
+            } else if(Handler.checkAccounts.size() == 1) {
+                Console.println("§light_greyChecking §white" + Handler.checkAccounts.get(0).getUsername() + "§light_grey.", false, Color.WHITE);
+            } else {
+                Console.println("§light_greyChecking no users, as no SchedulerProfiles were found.",false, Color.WHITE);
+            }
+        }
+        // TODO: Fix this, it is broken (doesn't detect any SchedulerProfiles).
+
         for(SchedulerProfile prof : Handler.checkAccounts) {
             if(5 > prof.interval() && 300 < prof.interval()) {
                 continue;
@@ -24,7 +43,6 @@ public class CheckHandler {
                 new Thread(() -> {
                     CheckManager.runChecks(prof);
                 }).start();
-                System.out.println("Checking: " + prof.getUsername());
             }
             /*
             Quick FYI on how this part works:

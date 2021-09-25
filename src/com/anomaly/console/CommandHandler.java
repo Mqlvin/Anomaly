@@ -5,6 +5,8 @@ import com.anomaly.console.commands.*;
 import java.awt.*;
 
 public class CommandHandler {
+    public static Boolean showCheckMessages = false;
+
     public void runCommand(String command) {
         if(command.toLowerCase().startsWith("clear")) {
             Clear.clear(command);
@@ -26,7 +28,10 @@ public class CommandHandler {
             // End of "unban" command.
         } else if(command.toLowerCase().startsWith("scheduler")) {
             Scheduler.schedule(command);
-            // End of "com.anomaly.scheduler" command.
+            // End of "scheduler" command.
+        } else if(command.toLowerCase().startsWith("togglecheckmessages")) {
+            ToggleChecks.toggleChecks(command);
+            // End of "ToggleCheckMessages" command.
         }
 
 

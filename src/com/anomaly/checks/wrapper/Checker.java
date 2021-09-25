@@ -1,3 +1,8 @@
+/*
+    Information about this class:
+    This does not make any API requests. This only uses information from the databases to determine, so all requests need to be made before checking the stats!
+ */
+
 package com.anomaly.checks.wrapper;
 
 import com.google.gson.JsonObject;

@@ -66,13 +66,13 @@ public class GUI {
         frame.setResizable(false);
 
         frame.setVisible(true);
+        input.requestFocus();
 
         input.addActionListener(e -> {
             String inputText = input.getText();
             if(inputText.length() > 1) {
                 println("> " + inputText, false, Color.LIGHT_GRAY);
                 new CommandHandler().runCommand(inputText);
-                println(" ", false, Color.BLACK);
                 scrollBottom();
                 if(recentCommands.size() != 0) {
                     if (!recentCommands.get(recentCommands.size() - 1).equalsIgnoreCase(inputText)) {
@@ -136,7 +136,7 @@ public class GUI {
     }
 
     public void scrollBottom() {
-        console.setCaretPosition(console.getDocument().getLength());
+        console.setCaretPosition(console.getDocument().getLength() - 1);
     }
 
     public void doLine(String s, Boolean trace, Color c) {

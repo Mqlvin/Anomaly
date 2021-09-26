@@ -103,6 +103,8 @@ public class SchedulerProfile implements CheckProfileInterface {
         }
         if(settings.has("email") && settings.get("email").toString().contains("@") && settings.get("email").toString().contains(".") && !settings.get("email").toString().equalsIgnoreCase("%email%")) {
             email = settings.get("email").toString().replace("\"", "");
+        } else if(settings.has("email") && settings.get("email").toString().replace("\"", "").equalsIgnoreCase("%email%")) {
+            email = "%email%";
         } else {
             PlayerLog.log("The \"email\" key wasn't found in " + uuid + " (" + Mojang.getUsername(uuid) + ")'s settings file.", uuid, Severity.FATAL);
         }
@@ -113,7 +115,11 @@ public class SchedulerProfile implements CheckProfileInterface {
         }
 
         if(settings.has("sendEmail") && isTrueOrFalse("sendEmail")) {
-            shouldSendEmail = Boolean.parseBoolean(settings.get("sendEmail").toString().replace("\"", ""));
+            if(email.equalsIgnoreCase("%email%")) {
+                shouldSendEmail = false;
+            } else {
+                shouldSendEmail = Boolean.parseBoolean(settings.get("sendEmail").toString().replace("\"", ""));
+            }
         } else {
             PlayerLog.log("The \"sendEmail\" key wasn't found in " + uuid + " (" + Mojang.getUsername(uuid) + ")'s settings file.", uuid, Severity.FATAL);
         }

@@ -2,6 +2,7 @@ package com.anomaly.scheduler;
 
 import com.anomaly.console.CommandHandler;
 import com.anomaly.console.commands.Stop;
+import com.anomaly.database.Entry;
 import com.anomaly.security.KeyManager;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -33,6 +34,7 @@ public class Initialiser {
             return;
         }
         for(String player : new ArrayList<String>(new Gson().fromJson(arr, new TypeToken<ArrayList<String>>(){}.getType()))) {
+            Entry.createPlayer(player);
             if(hasBannedPlayers) {
                 if(banned.contains(new JsonParser().parse(player))) {
                     amountBanned += 1;

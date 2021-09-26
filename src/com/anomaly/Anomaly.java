@@ -1,8 +1,11 @@
 package com.anomaly;
 
+import com.anomaly.api.mojang.Mojang;
 import com.anomaly.scheduler.Initialiser;
 import com.anomaly.security.KeyManager;
 import com.anomaly.startup.Start;
+import com.anomaly.user.Users;
+import com.anomaly.user.wrapper.UserAPI;
 
 public class Anomaly {
 

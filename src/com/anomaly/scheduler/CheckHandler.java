@@ -6,26 +6,15 @@ import com.anomaly.console.Console;
 import com.anomaly.profile.SchedulerProfile;
 
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 import static java.lang.Math.floor;
 
 public class CheckHandler {
     public static void handleChecks(Integer i) {
-        if(CommandHandler.showCheckMessages) {
-            if(Handler.checkAccounts.size() > 4) {
-                Console.println("§light_greyChecking §white" + Handler.checkAccounts.get(0).getUsername() + "§light_grey, §white" + Handler.checkAccounts.get(1).getUsername() + "§light_grey and §white" + Handler.checkAccounts.get(2).getUsername() + "§light_grey and §white" + (Handler.checkAccounts.size() - 3) + " §light_greyothers.", false, Color.WHITE);
-            } else if(Handler.checkAccounts.size() == 3) {
-                Console.println("§light_greyChecking §white" + Handler.checkAccounts.get(0).getUsername() + "§light_grey, §white" + Handler.checkAccounts.get(1).getUsername() + "§light_grey and §white" + Handler.checkAccounts.get(2).getUsername() + "§light_grey.", false, Color.WHITE);
-            } else if(Handler.checkAccounts.size() == 2) {
-                Console.println("§light_greyChecking §white" + Handler.checkAccounts.get(0).getUsername() + "§light_grey and §white" + Handler.checkAccounts.get(1).getUsername() + "§light_grey.", false, Color.WHITE);
-            } else if(Handler.checkAccounts.size() == 1) {
-                Console.println("§light_greyChecking §white" + Handler.checkAccounts.get(0).getUsername() + "§light_grey.", false, Color.WHITE);
-            } else {
-                Console.println("§light_greyChecking no users, as no SchedulerProfiles were found.",false, Color.WHITE);
-            }
-        }
-        // TODO: Fix this, it is broken (doesn't detect any SchedulerProfiles).
-
+        ArrayList<SchedulerProfile> profilesChecking = new ArrayList<>();
         for(SchedulerProfile prof : Handler.checkAccounts) {
             if(5 > prof.interval() && 300 < prof.interval()) {
                 continue;
@@ -51,6 +40,21 @@ public class CheckHandler {
             if currentInt / your interval
             currentInt updates by 5 every 5 seconds.
              */
+            profilesChecking.add(prof);
+        }
+        if(CommandHandler.showCheckMessages) {
+            String date = new SimpleDateFormat("HH:mm:ss").format(new Date());
+            if(profilesChecking.size() >= 4) {
+                Console.println("§dark_grey[" + date + "] §light_greyChecking §white" + profilesChecking.get(0).getUsername() + "§light_grey, §white" + profilesChecking.get(1).getUsername() + "§light_grey and §white" + profilesChecking.get(2).getUsername() + "§light_grey and §white" + (profilesChecking.size() - 3) + " §light_greyothers.", false, Color.WHITE);
+            } else if(profilesChecking.size() == 3) {
+                Console.println("§dark_grey[" + date + "] §light_greyChecking §white" + profilesChecking.get(0).getUsername() + "§light_grey, §white" + profilesChecking.get(1).getUsername() + "§light_grey and §white" + profilesChecking.get(2).getUsername() + "§light_grey.", false, Color.WHITE);
+            } else if(profilesChecking.size() == 2) {
+                Console.println("§dark_grey[" + date + "] §light_greyChecking §white" + profilesChecking.get(0).getUsername() + "§light_grey and §white" + profilesChecking.get(1).getUsername() + "§light_grey.", false, Color.WHITE);
+            } else if(profilesChecking.size() == 1) {
+                Console.println("§dark_grey[" + date + "] §light_greyChecking §white" + profilesChecking.get(0).getUsername() + "§light_grey.", false, Color.WHITE);
+            } else {
+                Console.println("§dark_grey[" + date + "] §light_greyChecking no users, as no SchedulerProfiles were found.",false, Color.WHITE);
+            }
         }
     }
 }

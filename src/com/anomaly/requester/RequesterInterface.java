@@ -1,4 +1,4 @@
-package com.anomaly.wrapper;
+package com.anomaly.requester;
 
 public interface RequesterInterface {
     public String data();

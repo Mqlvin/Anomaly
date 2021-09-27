@@ -6,8 +6,8 @@ import com.anomaly.database.LanguageDB;
 import com.anomaly.misc.LanguageEnum;
 import com.anomaly.profile.SchedulerProfile;
 import com.anomaly.warn.Warn;
-import com.anomaly.wrapper.RequestType;
-import com.anomaly.wrapper.Requester;
+import com.anomaly.requester.RequestType;
+import com.anomaly.requester.Requester;
 
 public class CheckManager {
     public static Checker check = new Checker();

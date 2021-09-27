@@ -1,14 +1,12 @@
-package com.anomaly.wrapper;
+package com.anomaly.requester;
 
 import com.anomaly.api.mojang.Mojang;
 import com.anomaly.console.Console;
 import com.anomaly.profile.ProfileManager;
 import com.anomaly.profile.SchedulerProfile;
-import com.anomaly.scheduler.Handler;
 import com.anomaly.security.KeyManager;
 
 import java.awt.*;
-import java.security.Key;
 
 import static com.anomaly.http.HTTPClient.requestJson;
 

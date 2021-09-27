@@ -136,7 +136,7 @@ public class GUI {
     }
 
     public void scrollBottom() {
-        console.setCaretPosition(console.getDocument().getLength() - 1);
+        console.setCaretPosition(document.getLength());
     }
 
     public void doLine(String s, Boolean trace, Color c) {

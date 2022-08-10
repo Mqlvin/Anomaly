@@ -1,3 +1,5 @@
+## Note: This was my first Java project I worked on, please don't let the quality of this code reflect my skill as a developer. Thank you :)
+
 # Anomaly
 Uses the Hypixel API to intelligently detect if user accounts have been compromised.
 
